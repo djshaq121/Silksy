@@ -70,13 +70,24 @@ namespace SilksyAPI.Controllers
         }
 
         [HttpPost("Login")]
-        public ActionResult<UserDto> Login(LoginDto login)
+        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            string user = login.Username;
+            var user = await context.Users.SingleOrDefaultAsync(storeUser => storeUser.UserName == loginDto.Username);
+            if (user == null)
+                return BadRequest("Username or password is incorrect");
+            
+            var hmac = new HMACSHA512(user.PasswordSalt);
+            var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+
+            for(int i =0; i < hash.Length; i++)
+            {
+                if (hash[i] != user.PasswordHash[i])
+                    return BadRequest("Username or password is incorrect");
+            }
 
             return new UserDto
             {
-                Username = user
+                Username = user.UserName
             };
         }
 
