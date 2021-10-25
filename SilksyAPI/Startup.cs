@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SilksyAPI.Data;
 using SilksyAPI.Helpers;
+using SilksyAPI.Interface;
+using SilksyAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +32,7 @@ namespace SilksyAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(SilksyMappingProfile).Assembly);
+            services.AddScoped<ITokenService, TokenService>();
             services.AddDbContext<SilksyContext>(options => 
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));

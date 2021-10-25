@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using SilksyAPI.Data;
 using SilksyAPI.Dto;
 using SilksyAPI.Entities;
+using SilksyAPI.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +22,15 @@ namespace SilksyAPI.Controllers
         private readonly SilksyContext context;
         private readonly IMapper mapper;
         private readonly ILogger<AccountController> logger;
+        private readonly ITokenService tokenService;
 
-        public AccountController(SilksyContext context, IMapper mapper, ILogger<AccountController> logger)
+        public AccountController(SilksyContext context, IMapper mapper, 
+            ILogger<AccountController> logger, ITokenService tokenService)
         {
             this.context = context;
             this.mapper = mapper;
             this.logger = logger;
+            this.tokenService = tokenService;
         }
 
         [HttpPost("Register")]
@@ -64,8 +68,8 @@ namespace SilksyAPI.Controllers
 
             return new UserDto
             {
-              Username = user.UserName,
-              Token = "Test Token"
+                Username = user.UserName,
+                Token = tokenService.CreateToken(user)
             };
         }
 
@@ -87,9 +91,9 @@ namespace SilksyAPI.Controllers
 
             return new UserDto
             {
-                Username = user.UserName
+                Username = user.UserName,
+                Token = tokenService.CreateToken(user)
             };
         }
-
     }
 }
