@@ -1,7 +1,6 @@
 
 
 <nav class="navbar navbar-expand-sm navbar-light bg-light" aria-label="Third navbar example">
-    
     <div class="container">
             <a class="navbar-brand" href="#">Silksy</a>
             <ul class="navbar-nav me-auto mb-2 mb-sm-0">
@@ -18,6 +17,10 @@
             <form>
                  <input class="form-control" type="text" placeholder="Search" aria-label="Search" style="width:100%;">
             </form>
-            <i class="fa fa-shopping-cart"></i>
+            <div class="nav-item">
+                <a class="nav-item mr-3" routerLink="/login"><i class="fa fa-user"></i></a>
+                <a class="nav-item"><i class="fa fa-shopping-cart mr-3"></i></a>
+                <button class="btn btn-primary" routerLink="/register"> register </button>
+            </div>
     </div>
   </nav>

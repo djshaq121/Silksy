@@ -11,7 +11,7 @@ export class NavBarComponent implements OnInit {
   constructor(private accountService: AccountService) { }
 
   ngOnInit(): void {
-    this.accountService.weatherGet().subscribe()
+    
   }
 
 }
