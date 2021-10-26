@@ -1,10 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { User } from './model/user';
+import { AccountService } from './_services/account.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit  {
   title = 'SilksyClient';
+
+  constructor(private accountService: AccountService) {
+
+  }
+
+  ngOnInit(): void {
+    // Any time the main compoonent is reloaded we check to see if the user is log in
+    this.checkAndSetCurrentUser();
+  }
+
+  
+  checkAndSetCurrentUser() {
+    let user: User = JSON.parse(localStorage.getItem('user'));
+    this.accountService.setCurrentUser(user);
+  }
+
 }

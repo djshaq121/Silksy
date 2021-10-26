@@ -8,10 +8,14 @@ import { AccountService } from '../_services/account.service';
 })
 export class NavBarComponent implements OnInit {
 
-  constructor(private accountService: AccountService) { }
+  constructor(public accountService: AccountService) { }
 
   ngOnInit(): void {
     
+  }
+
+  logout() {
+    this.accountService.logout();
   }
 
 }

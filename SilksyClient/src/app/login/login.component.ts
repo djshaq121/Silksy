@@ -31,6 +31,10 @@ export class LoginComponent implements OnInit {
     }, err => {
       console.log(err);
     })
+
+    // This is temp - Once the user logs in they should be redirected to the home page be default or 
+    // the page they tried to visit dynamically
+    this.loginForm.reset();
   }
 
 }

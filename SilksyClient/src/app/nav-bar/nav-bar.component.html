@@ -18,9 +18,28 @@
                  <input class="form-control" type="text" placeholder="Search" aria-label="Search" style="width:100%;">
             </form>
             <div class="nav-item">
-                <a class="nav-item mr-3" routerLink="/login"><i class="fa fa-user"></i></a>
-                <a class="nav-item"><i class="fa fa-shopping-cart mr-3"></i></a>
-                <button class="btn btn-primary" routerLink="/register"> register </button>
+                <span class="mr-2" dropdown>
+                    <a href (click)="false" id="basic-link" dropdownToggle aria-controls="basic-link-dropdown">
+                        <i class="fa fa-user fa-lg"></i>
+                    </a>
+                        <ul id="basic-link-dropdown" *dropdownMenu class="dropdown-menu"
+                            role="menu" aria-labelledby="basic-link"> 
+                            <li *ngIf="!(accountService.currentUser$ | async)">
+                                <a class="dropdown-item" routerLink="/login">Sign In</a>
+                            </li>
+                            <li *ngIf="!(accountService.currentUser$ | async)">
+                                <a class="dropdown-item" routerLink="/register">Join</a>
+                            </li>
+                            <li *ngIf="accountService.currentUser$ | async">
+                                <a class="dropdown-item" (click)="logout()">Sign out</a>
+                            </li>
+                        </ul>
+                        <ul id="basic-link-dropdown" *dropdownMenu class="dropdown-menu"
+                            role="menu" aria-labelledby="basic-link">
+                           
+                        </ul>
+                  </span>
+                <a class="nav-item"><i class="fa fa-shopping-cart mr-3 fa-lg"></i></a>
             </div>
     </div>
   </nav>
