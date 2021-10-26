@@ -18,7 +18,6 @@ export class AppComponent implements OnInit  {
   ngOnInit(): void {
     // Any time the main compoonent is reloaded we check to see if the user is log in
     this.checkAndSetCurrentUser();
-    this.p.getProducts().subscribe();
   }
 
   

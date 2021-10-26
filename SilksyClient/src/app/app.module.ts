@@ -11,6 +11,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { SharedModule } from './_modules/shared.module';
+import { ProductListComponent } from './products/product-list/product-list.component';
+import { ProductCardComponent } from './products/product-card/product-card.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { SharedModule } from './_modules/shared.module';
     NavBarComponent,
     LoginComponent,
     RegisterComponent,
+    ProductListComponent,
+    ProductCardComponent,
   ],
   imports: [
     BrowserModule,

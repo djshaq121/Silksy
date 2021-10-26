@@ -14,7 +14,7 @@ export class ProductService {
   getProducts() {
     return this.http.get<Product[]>(this.baseUrl + 'Product').pipe(
       map((products: Product[]) => {
-          console.log(products);
+          return products;
       }) 
     )
   }
