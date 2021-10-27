@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { pipe } from 'rxjs';
 import { AccountService } from '../_services/account.service';
 
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
  
   loginForm: FormGroup;
 
-  constructor(private accountService: AccountService, private formBuilder: FormBuilder) { }
+  constructor(private accountService: AccountService, private formBuilder: FormBuilder, private tostrService: ToastrService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -27,9 +28,9 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.accountService.login(this.loginForm.value).subscribe( response => {
-      console.log("Logged in suc")
+      this.tostrService.success("Sign in")
     }, err => {
-      console.log(err);
+      this.tostrService.error(err?.error);
     })
 
     // This is temp - Once the user logs in they should be redirected to the home page be default or 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -11,7 +12,7 @@ export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
 
-  constructor(private accountService: AccountService, private formBuilder: FormBuilder) { }
+  constructor(private accountService: AccountService, private formBuilder: FormBuilder, private tostrService: ToastrService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -29,7 +30,10 @@ export class RegisterComponent implements OnInit {
   register() {
     this.accountService.register(this.registerForm.value).subscribe(
       response => {
-        console.log("Register Complete")
+        this.tostrService.success("registration complet");
+      }, 
+      error => {
+        this.tostrService.success(error?.error);
       }
     )
   }
