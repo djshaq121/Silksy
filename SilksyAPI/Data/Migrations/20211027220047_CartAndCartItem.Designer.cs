@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SilksyAPI.Data;
 
 namespace SilksyAPI.Migrations
 {
     [DbContext(typeof(SilksyContext))]
-    partial class SilksyContextModelSnapshot : ModelSnapshot
+    [Migration("20211027220047_CartAndCartItem")]
+    partial class CartAndCartItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

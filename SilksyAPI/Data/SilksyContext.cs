@@ -13,7 +13,18 @@ namespace SilksyAPI.Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            //builder.Entity<Cart>()
+            //    .HasMany(cart => cart.CartItems)
+            //    .WithOne(ci => ci.Cart)
+            //    .IsRequired();
+        }
+
         public DbSet<StoreUser> Users { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Cart> Carts { get; set; }
     }
 }
