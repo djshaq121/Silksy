@@ -56,7 +56,6 @@ namespace SilksyAPI
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
-
                 });
         }
 

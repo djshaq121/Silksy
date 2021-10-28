@@ -13,6 +13,10 @@ namespace SilksyAPI.Helpers
         public SilksyMappingProfile()
         {
             CreateMap<RegisterDto, StoreUser>();
+
+            CreateMap<Cart, CartDto>();
+
+            CreateMap<CartItem, CartItemDto>();
         }
     }
 }
