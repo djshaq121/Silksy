@@ -14,6 +14,7 @@ import { SharedModule } from './_modules/shared.module';
 import { ProductListComponent } from './products/product-list/product-list.component';
 import { ProductCardComponent } from './products/product-card/product-card.component';
 import { JwtInterceptor } from './_interceptor/jwt.interceptor';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { JwtInterceptor } from './_interceptor/jwt.interceptor';
     RegisterComponent,
     ProductListComponent,
     ProductCardComponent,
+    ShoppingCartComponent,
   ],
   imports: [
     BrowserModule,

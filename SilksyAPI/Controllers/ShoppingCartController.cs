@@ -69,7 +69,9 @@ namespace SilksyAPI.Controllers
                 if (cart.CartItems == null || !cart.CartItems.Any())
                     return BadRequest("Internal Server Error");
 
-                var cartItemExistingProduct = cart.CartItems.First(ci => ci.Product == product);
+                CartItem cartItemExistingProduct;
+                
+                cartItemExistingProduct = cart.CartItems.First(ci => ci.Product == product);
 
                 if(cartItemExistingProduct != null)
                     cartItemExistingProduct.Quantity += cartItemDto.Quantity;
@@ -119,42 +121,6 @@ namespace SilksyAPI.Controllers
         public Task<ActionResult> RemoveProductFromCart()
         {
             throw new NotImplementedException("This will be implemented soon");
-        }
-
-        [Authorize]
-        [HttpPost("AddProducts")]
-        public async Task<ActionResult> AddItemsToShoppingCart(List<CartItemDto> cartItemsDto)
-        {
-            // We need to authincate here
-            if (!cartItemsDto.Any())
-                BadRequest("No cart data sent");
-
-            var cart = new Cart();
-
-            // check if they exist in product table
-            foreach (var cartItemRequest in cartItemsDto)
-            {
-                var product = await context.Products.FindAsync(cartItemRequest.ProductId);
-                if (product != null || cartItemRequest.Quantity > 0)
-                {
-                    var cartItem = new CartItem
-                    {
-                        Product = product,
-                        Quantity = cartItemRequest.Quantity,
-                        Cart = cart
-                    };
-
-                    cart.CartItems.Add(cartItem);
-                }
-            }
-
-            if (!cart.CartItems.Any())
-                return BadRequest("Failed to add items to shopping cart");
-
-            return NoContent();
-            //
-            //cart.User = user
-
         }
     }
 }
