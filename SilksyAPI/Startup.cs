@@ -14,6 +14,7 @@ using SilksyAPI.Data;
 using SilksyAPI.Helpers;
 using SilksyAPI.Interface;
 using SilksyAPI.Services;
+using SilksyAPI.SilksyRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,9 @@ namespace SilksyAPI
         {
             services.AddAutoMapper(typeof(SilksyMappingProfile).Assembly);
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
             services.AddDbContext<SilksyContext>(options => 
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));

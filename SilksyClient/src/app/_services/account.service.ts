@@ -35,7 +35,8 @@ export class AccountService {
     return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
       map((user: User) => {
         if(user.token) {
-          localStorage.setItem('user', JSON.stringify(user))
+          localStorage.setItem('user', JSON.stringify(user));
+          this.setCurrentUser(user);
         }
       })
     )

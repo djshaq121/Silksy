@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SilksyAPI.Data;
 using SilksyAPI.Entities;
+using SilksyAPI.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,17 +14,17 @@ namespace SilksyAPI.Controllers
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
-        private readonly SilksyContext context;
+        public IProductRepository productRepository { get; }
 
-        public ProductController(SilksyContext context)
+        public ProductController(IProductRepository productRepository)
         {
-            this.context = context;
+            this.productRepository = productRepository;
         }
-        
+
         [HttpGet]
-        public ActionResult<List<Product>> GetProducts()
+        public async Task<ActionResult<List<Product>>> GetProducts()
         {
-            var products = context.Products.ToList();
+            var products = await productRepository.GetAllProductsAsync();
             if (products.Count <= 0)
                 return NoContent();
 

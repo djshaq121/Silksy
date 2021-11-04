@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IShoppingCart } from '../model/shopping-cart';
 import { AccountService } from '../_services/account.service';
@@ -14,13 +15,13 @@ export class NavBarComponent implements OnInit {
   shoppingCartTotalLength: number;
   cartSubscription: Subscription;
 
-  constructor(public accountService: AccountService, public ShoppingCartService: ShoppingCartService) { 
+  constructor(public accountService: AccountService, public shoppingCartService: ShoppingCartService, private router: Router ) { 
   }
 
   ngOnInit(): void {
-    this.cartSubscription = this.ShoppingCartService.currentCart$.subscribe(x => {
+    this.cartSubscription = this.shoppingCartService.currentCart$.subscribe(x => {
       this.shoppingCart = x
-      this.shoppingCartTotalLength = this.ShoppingCartService.getCartLength(x)});
+      this.shoppingCartTotalLength = this.shoppingCartService.getCartLength(x)});
 
   }
 
@@ -30,6 +31,7 @@ export class NavBarComponent implements OnInit {
 
   logout() {
     this.accountService.logout();
+    this.router.navigateByUrl('/products'); // TODO - Change it to home page
   }
 
 }

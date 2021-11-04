@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SilksyAPI.Data;
 using SilksyAPI.Dto;
 using SilksyAPI.Entities;
+using SilksyAPI.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +18,62 @@ namespace SilksyAPI.Controllers
     [Route("api/[controller]")]
     public class ShoppingCartController : ControllerBase
     {
-        private readonly SilksyContext context;
+        private readonly IShoppingCartRepository shoppingCartRepository;
+        private readonly IUserRepository userRepository;
+        private readonly IProductRepository productRepository;
         private readonly IMapper mapper;
 
-        public ShoppingCartController(SilksyContext context, IMapper mapper)
+        public ShoppingCartController(IShoppingCartRepository shoppingCartRepository, 
+            IUserRepository userRepository, IProductRepository productRepository,  IMapper mapper)
         {
-            this.context = context;
+            this.shoppingCartRepository = shoppingCartRepository;
+            this.userRepository = userRepository;
+            this.productRepository = productRepository;
             this.mapper = mapper;
+        }
+
+        [Authorize]
+        [HttpPost("UpdateCart")]
+        public async Task<ActionResult<CartDto>> UpdateShoppingCart(CartDto cartDto)
+        {
+            var cart = mapper.Map<Cart>(cartDto);
+
+            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await userRepository.GetUserByUsernameAsync(username);
+
+            foreach(var ci in cart.CartItems)
+            {
+                // Maybe remove item if the quantity
+                if (ci.Quantity <= 0 || ci.Quantity > 100)
+                    ci.Quantity = 1;
+
+               Product verifiedProduct = await productRepository.GetProductByIdAsync(ci.ProductId);
+                if (verifiedProduct == null)
+                    return BadRequest("Invalid Product");
+
+
+                ci.Product = verifiedProduct;
+            }
+
+            var existingCart = await shoppingCartRepository.GetCartByUserIdAsync(user.Id);
+
+            if (existingCart != null)
+            {
+                existingCart.CartItems = cart.CartItems;
+                cart = existingCart;
+            } 
+            else {
+                cart.User = user;
+                shoppingCartRepository.AddCart(cart);
+            }
+
+            var updatedCart = mapper.Map<CartDto>(cart);
+
+            var result = await shoppingCartRepository.SaveAllChangesAsync();
+            if (result)
+                return Ok(updatedCart);
+
+            return BadRequest("Failed to update shopping cart");
         }
 
         [Authorize]
@@ -34,18 +84,17 @@ namespace SilksyAPI.Controllers
             if (cartItemDto.Quantity <= 0)
                 BadRequest("No cart data sent");
 
-            var product = await context.Products.FindAsync(cartItemDto.ProductId);
+            var product = await productRepository.GetProductByIdAsync(cartItemDto.ProductId);
+               // await context.Products.FindAsync(cartItemDto.ProductId);
             if(product == null)
                 BadRequest("Product not found");
 
             var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            var user = await context.Users.SingleOrDefaultAsync(u => u.UserName == username);
+            var user = await userRepository.GetUserByUsernameAsync(username);
 
             //check if we have an exist cart
-            var cart = await context.Carts.Include(c => c.CartItems)
-                .ThenInclude(ci => ci.Product)
-                .SingleOrDefaultAsync(cart => cart.UserId == user.Id);
+            var cart = await shoppingCartRepository.GetCartByUserIdAsync(user.Id);
 
             if(cart == null)
             {
@@ -61,7 +110,7 @@ namespace SilksyAPI.Controllers
                     Quantity = cartItemDto.Quantity
                 });
 
-                context.Carts.Add(cart);
+               shoppingCartRepository.AddCart(cart);
 
             } 
             else
@@ -71,7 +120,7 @@ namespace SilksyAPI.Controllers
 
                 CartItem cartItemExistingProduct;
                 
-                cartItemExistingProduct = cart.CartItems.First(ci => ci.Product == product);
+                cartItemExistingProduct = cart.CartItems.SingleOrDefault(ci => ci.Product == product);
 
                 if(cartItemExistingProduct != null)
                     cartItemExistingProduct.Quantity += cartItemDto.Quantity;
@@ -85,8 +134,8 @@ namespace SilksyAPI.Controllers
                 }
             }
 
-            var result = await context.SaveChangesAsync();
-            if(result > 0)
+            var result = await shoppingCartRepository.SaveAllChangesAsync();
+            if(result)
                 return NoContent();
 
             return BadRequest("Failed to save shopping cart");
@@ -97,11 +146,9 @@ namespace SilksyAPI.Controllers
         public async Task<ActionResult<CartDto>> GetShoppingCart()
         {
             var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var user = await context.Users.SingleOrDefaultAsync(u => u.UserName == username);
+            var user = await userRepository.GetUserByUsernameAsync(username);
 
-            var cart = await context.Carts.Include(c => c.CartItems)
-               .ThenInclude(ci => ci.Product)
-               .SingleOrDefaultAsync(cart => cart.UserId == user.Id);
+            var cart = await shoppingCartRepository.GetCartByUserIdAsync(user.Id);
 
             if (cart == null)
                 return Ok();
@@ -114,13 +161,6 @@ namespace SilksyAPI.Controllers
                 return BadRequest("Failed to get cart");
 
             return Ok(cartDto);
-        }
-
-        [Authorize]
-        [HttpDelete("RemoveProduct")]
-        public Task<ActionResult> RemoveProductFromCart()
-        {
-            throw new NotImplementedException("This will be implemented soon");
         }
     }
 }

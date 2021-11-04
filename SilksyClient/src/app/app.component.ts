@@ -23,21 +23,22 @@ export class AppComponent implements OnInit  {
 
   checkAndSetCurrentUser() {
     let user: User = JSON.parse(localStorage.getItem('user'));
-    this.accountService.setCurrentUser(user);
+    if (user) {
+      this.accountService.setCurrentUser(user);
+    }
   }
 
   checkAndSetShoppingCart() {
-    // let user: User = JSON.parse(localStorage.getItem('user'));
-    // let cart: IShoppingCart = JSON.parse(localStorage.getItem('cart'));
-    // if (user) {
-    //   this.cartService.getShoppingCart().subscribe();
-    //   return;
-    // }
+    let cart: IShoppingCart = JSON.parse(localStorage.getItem('cart'));
+    if (cart) {
+      this.cartService.setCurrentCart(cart);
+      return;
+    }
 
-      
-    // if(cart) {
-
-    // }
+    let user: User = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      this.cartService.getShoppingCartFromServer().subscribe();
+    }
   }
 
 }

@@ -19,7 +19,7 @@ export class ProductCardComponent implements OnInit {
     this.cartService.addProductToCart(this.product).subscribe(res => {
       console.log(res);
     }, err => {
-
+      console.log(err);
     });
   }
 

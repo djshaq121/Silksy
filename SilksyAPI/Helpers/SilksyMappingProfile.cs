@@ -14,9 +14,9 @@ namespace SilksyAPI.Helpers
         {
             CreateMap<RegisterDto, StoreUser>();
 
-            CreateMap<Cart, CartDto>();
+            CreateMap<Cart, CartDto>().ForMember(dest => dest.CartItems, opt => opt.MapFrom(s => s.CartItems)).ReverseMap().ForAllOtherMembers(x => x.Ignore());
 
-            CreateMap<CartItem, CartItemDto>();
+            CreateMap<CartItem, CartItemDto>().ReverseMap();
         }
     }
 }

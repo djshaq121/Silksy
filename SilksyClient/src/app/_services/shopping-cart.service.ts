@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, ReplaySubject, Subject } from 'rxjs';
-import { catchError, map, take } from 'rxjs/operators';
+import { catchError, flatMap, map, switchMap, take } from 'rxjs/operators';
 import { Product } from '../model/product';
 import { ICartItem, IShoppingCart, ShoppingCart } from '../model/shopping-cart';
 import { User } from '../model/user';
@@ -13,12 +13,31 @@ import { AccountService } from './account.service';
 export class ShoppingCartService {
   private currentCartSourse = new BehaviorSubject<IShoppingCart>(null);
   currentCart$ = this.currentCartSourse.asObservable()
-  baseUrl = "https://localhost:5001/api/"; 
+  baseUrl = "https://localhost:5001/api/";
   user: User;
 
   constructor(private http: HttpClient, private accountService: AccountService) {
-    this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
-   }
+    this.accountService.currentUser$.subscribe(user => this.onUserChanged(user));
+  }
+
+  onUserChanged(user: User) {
+    this.user = user;
+    if (this.user) {
+      //Check if we data in 
+      let cart: IShoppingCart = JSON.parse(localStorage.getItem('cart'));
+      if (cart) {
+        this.updateCart(cart).subscribe((response) => {
+          localStorage.removeItem('cart');
+        }, error => {
+          console.log("Failed to update cart")
+        })
+      }
+    } else {
+      //If we logged out clear cart
+      localStorage.removeItem('cart');
+      this.setCurrentCart(null);
+    }
+  }
 
   getShoppingCart() {
     if (this.user !== null) {
@@ -29,62 +48,66 @@ export class ShoppingCartService {
     }
   }
 
-  private getShoppingCartFromServer() {
+  setCurrentCart(cart: IShoppingCart) {
+    this.currentCartSourse.next(cart);
+  }
+
+  getShoppingCartFromServer() {
     return this.http.get<IShoppingCart>(this.baseUrl + 'ShoppingCart').pipe(
       map((cart: IShoppingCart) => {
         this.currentCartSourse.next(cart);
+        return cart;
       })
     )
   }
 
   getCartLength(cart: IShoppingCart): number {
     let length = 0;
-    cart?.cartItems?.forEach( item => length += item.quantity );
+    cart?.cartItems?.forEach(item => length += item.quantity);
     return length;
   }
 
   addProductToCart(product: Product, quantity: number = 1) {
-    const cartItem: ICartItem = {productId: product.id, product: product, quantity: quantity }
+    const cartItem: ICartItem = { productId: product.id, product: product, quantity: quantity }
 
-    let cart: IShoppingCart;
-    this.getShoppingCart().subscribe(sc => cart = sc);
+    let cart: IShoppingCart = this.currentCartSourse.value;
+    if(cart === null) {
+      cart = new ShoppingCart();
+    }
 
-    cart.cartItems = this.addOrUpdateProduct(cart.cartItems, cartItem, quantity);
+   return this.addProduct(cart, cartItem);
+    
+  }
 
-    if(this.user === null) {
+  private addProduct(cart: IShoppingCart, cartItemToAdd: ICartItem) {
+    cart.cartItems = this.addOrUpdateProduct(cart.cartItems, cartItemToAdd);
+
+    if (this.user === null) {
+      this.currentCartSourse.next(cart);
       return of(localStorage.setItem("cart", JSON.stringify(cart)));
     }
 
-    return this.http.post(this.baseUrl + 'ShoppingCart/AddProduct', { productId: product.id, quantity: quantity }).pipe(
-      map(() =>{
-          this.currentCartSourse.next(cart);
+    return this.updateCart(cart);
+    
+  }
+
+  private updateCart(cart: IShoppingCart) {
+    return this.http.post(this.baseUrl + 'ShoppingCart/UpdateCart', cart).pipe(
+      map((response: IShoppingCart) => {
+        this.currentCartSourse.next(response);
       })
     )
   }
 
-  // private getCart() {
-  //   let cart: IShoppingCart;
-  //   if (this.user !== null) {
-  //     cart = this.currentCartSourse.value;
-
-  //   } else {
-  //     cart = JSON.parse(localStorage.getItem("cart"));
-  //   }
-
-  //   if (cart === null) {
-  //     cart = new ShoppingCart();
-  //   }
-  //   return cart;
-  //}
-
-  private addOrUpdateProduct(cartItems: ICartItem[], itemToAdd: ICartItem, quantity: number): ICartItem[] {
+  private addOrUpdateProduct(cartItems: ICartItem[], itemToAdd: ICartItem): ICartItem[] {
     const index = cartItems.findIndex(i => i.productId === itemToAdd.productId);
     if (index === -1) {
-      itemToAdd.quantity = quantity;
       cartItems.push(itemToAdd);
     } else {
-      cartItems[index].quantity += quantity;
+
+      cartItems[index].quantity += itemToAdd.quantity;
     }
     return cartItems;
   }
 }
+
