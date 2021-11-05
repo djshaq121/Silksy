@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { catchError, flatMap, map, switchMap, take } from 'rxjs/operators';
 import { Product } from '../model/product';
@@ -12,11 +13,15 @@ import { AccountService } from './account.service';
 })
 export class ShoppingCartService {
   private currentCartSourse = new BehaviorSubject<IShoppingCart>(null);
-  currentCart$ = this.currentCartSourse.asObservable()
-  baseUrl = "https://localhost:5001/api/";
-  user: User;
+  currentCart$ = this.currentCartSourse.asObservable();
 
-  constructor(private http: HttpClient, private accountService: AccountService) {
+  private cartTotalSourse = new BehaviorSubject<number>(null);
+  cartTotal$ = this.cartTotalSourse.asObservable();
+
+  baseUrl = "https://localhost:5001/api/";
+  user: User = null;
+
+  constructor(private http: HttpClient, private accountService: AccountService, private toastr: ToastrService) {
     this.accountService.currentUser$.subscribe(user => this.onUserChanged(user));
   }
 
@@ -79,24 +84,82 @@ export class ShoppingCartService {
     
   }
 
+  removeCartItem(cartItem: ICartItem) {
+    const cart = this.currentCartSourse.value;
+    const foundIndex = cart.cartItems.findIndex(ci => ci.productId === cartItem.productId);
+
+    if(foundIndex === -1) {
+      this.toastr.error("Failed to remove item from cart");
+      return;
+    }
+
+    cart.cartItems.splice(foundIndex, 1);
+    if(cart.cartItems.length > 0) {
+      if(this.user === null) {
+          this.updateCartLocally(cart);
+          return;
+        }
+      this.updateCart(cart).pipe(take(1)).subscribe();
+    } else {
+      this.deleteShoppingCart();
+    }
+   
+  }
+
+  deleteShoppingCart() {
+    if(this.user === null) {
+      this.setCurrentCart(null);
+      localStorage.removeItem('cart');
+      return;
+    }
+
+    this.http.delete(this.baseUrl + 'ShoppingCart').subscribe(() => {
+      this.setCurrentCart(null);
+      localStorage.removeItem('cart');
+    }, error => {
+      console.error(error);
+    })
+  }
+
+  updateCartItemQuantity(cartItem: ICartItem, quantity: number) {
+    const cart = this.currentCartSourse.value;
+    if(cart === null) {
+      return;
+    }
+
+    const foundIndex = cart.cartItems.findIndex(ci => ci.productId === cartItem?.productId);
+    if(foundIndex === -1 || cart.cartItems[foundIndex].quantity <= 0 || cart.cartItems[foundIndex].quantity === quantity)
+      return;
+
+    cart.cartItems[foundIndex].quantity = quantity;
+    if(this.user !== null) {
+      this.updateCart(cart).pipe(take(1)).subscribe();
+    } else {
+      this.updateCartLocally(cart);
+    }
+  }
+
   private addProduct(cart: IShoppingCart, cartItemToAdd: ICartItem) {
     cart.cartItems = this.addOrUpdateProduct(cart.cartItems, cartItemToAdd);
 
     if (this.user === null) {
-      this.currentCartSourse.next(cart);
-      return of(localStorage.setItem("cart", JSON.stringify(cart)));
+     return this.updateCartLocally(cart);
     }
 
     return this.updateCart(cart);
-    
   }
 
   private updateCart(cart: IShoppingCart) {
     return this.http.post(this.baseUrl + 'ShoppingCart/UpdateCart', cart).pipe(
       map((response: IShoppingCart) => {
-        this.currentCartSourse.next(response);
+        this.setCurrentCart(response);
       })
     )
+  }
+
+  private updateCartLocally(cart: IShoppingCart) {
+    this.setCurrentCart(cart);
+    return of(localStorage.setItem("cart", JSON.stringify(cart)));
   }
 
   private addOrUpdateProduct(cartItems: ICartItem[], itemToAdd: ICartItem): ICartItem[] {

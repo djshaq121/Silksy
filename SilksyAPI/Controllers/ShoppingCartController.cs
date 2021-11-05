@@ -76,71 +76,7 @@ namespace SilksyAPI.Controllers
             return BadRequest("Failed to update shopping cart");
         }
 
-        [Authorize]
-        [HttpPost("AddProduct")]
-        public async Task<ActionResult> AddItemToShoppingCart(CartItemDto cartItemDto)
-        {
-            // We need to authincate here
-            if (cartItemDto.Quantity <= 0)
-                BadRequest("No cart data sent");
-
-            var product = await productRepository.GetProductByIdAsync(cartItemDto.ProductId);
-               // await context.Products.FindAsync(cartItemDto.ProductId);
-            if(product == null)
-                BadRequest("Product not found");
-
-            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            var user = await userRepository.GetUserByUsernameAsync(username);
-
-            //check if we have an exist cart
-            var cart = await shoppingCartRepository.GetCartByUserIdAsync(user.Id);
-
-            if(cart == null)
-            {
-                cart = new Cart()
-                { 
-                    User = user,
-                    CartItems = new List<CartItem>()
-                };
-
-                cart.CartItems.Add(new CartItem
-                {
-                    Product = product,
-                    Quantity = cartItemDto.Quantity
-                });
-
-               shoppingCartRepository.AddCart(cart);
-
-            } 
-            else
-            {
-                if (cart.CartItems == null || !cart.CartItems.Any())
-                    return BadRequest("Internal Server Error");
-
-                CartItem cartItemExistingProduct;
-                
-                cartItemExistingProduct = cart.CartItems.SingleOrDefault(ci => ci.Product == product);
-
-                if(cartItemExistingProduct != null)
-                    cartItemExistingProduct.Quantity += cartItemDto.Quantity;
-                else
-                {
-                    cart.CartItems.Add(new CartItem
-                    {
-                        Product = product,
-                        Quantity = cartItemDto.Quantity
-                    });
-                }
-            }
-
-            var result = await shoppingCartRepository.SaveAllChangesAsync();
-            if(result)
-                return NoContent();
-
-            return BadRequest("Failed to save shopping cart");
-        }
-
+       
         [Authorize]
         [HttpGet]
         public async Task<ActionResult<CartDto>> GetShoppingCart()
@@ -161,6 +97,25 @@ namespace SilksyAPI.Controllers
                 return BadRequest("Failed to get cart");
 
             return Ok(cartDto);
+        }
+
+        [Authorize]
+        [HttpDelete]
+        public async Task<ActionResult> DeleteShoppingCart()
+        {
+            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await userRepository.GetUserByUsernameAsync(username);
+
+            var cart = await shoppingCartRepository.GetCartByUserIdAsync(user.Id);
+            if (cart == null)
+                return NoContent();
+
+            shoppingCartRepository.DeleteCart(cart);
+            var result = await shoppingCartRepository.SaveAllChangesAsync();
+            if (!result)
+                return StatusCode(500);
+
+            return NoContent();
         }
     }
 }

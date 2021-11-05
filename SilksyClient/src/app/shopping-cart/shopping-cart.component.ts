@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { IShoppingCart } from '../model/shopping-cart';
 import { ShoppingCartService } from '../_services/shopping-cart.service';
 
@@ -9,12 +10,12 @@ import { ShoppingCartService } from '../_services/shopping-cart.service';
 })
 export class ShoppingCartComponent implements OnInit {
 
-  cart: IShoppingCart;
+  private sub: Subscription;
   
-  constructor(private cartService: ShoppingCartService) { }
+  constructor(public cartService: ShoppingCartService) { }
 
   ngOnInit(): void {
-    //Check if you're logged in
+    // Maybe call get shopping cart to get the latest cart
   }
 
 }

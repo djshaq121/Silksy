@@ -45,5 +45,10 @@ namespace SilksyAPI.SilksyRepository
         {
             return await context.SaveChangesAsync() > 0;
         }
+
+        public void DeleteCart(Cart cart)
+        {
+            context.Carts.Remove(cart);
+        }
     }
 }

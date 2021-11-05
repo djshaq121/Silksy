@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { SharedModule } from './_modules/shared.module';
@@ -15,6 +15,7 @@ import { ProductListComponent } from './products/product-list/product-list.compo
 import { ProductCardComponent } from './products/product-card/product-card.component';
 import { JwtInterceptor } from './_interceptor/jwt.interceptor';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { BasketItemComponent } from './shopping-cart/basket-item/basket-item.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
     ProductListComponent,
     ProductCardComponent,
     ShoppingCartComponent,
+    BasketItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,6 +34,7 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule, 
+    FormsModule,
     SharedModule
     
   ],

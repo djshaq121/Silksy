@@ -1,12 +1,34 @@
 
-<div class="row">
+<div class="row"  *ngIf="cartService.currentCart$ | async">
+    <div class="title">
+        <div class="row">
+            <div class="col">
+                <h4><b>Shopping Cart</b></h4>
+            </div>
+            <div class="col align-self-center text-right text-muted">3 items</div>
+        </div>
+    </div>
     <div class="col-8 card mr-4">
-        <h1 class="card-title">My Basket</h1>
-
+        <div *ngFor="let item of (cartService.currentCart$ | async).cartItems">
+            <app-basket-item [basketItem]="item"></app-basket-item>
+        </div>
     </div>
     <div class="col card">
         <h5 class="card-title"> Total </h5>
 
         <button class="btn btn-primary"> Checkout </button>
+    </div>
+</div>
+
+<div class="container-fluid mt-100" *ngIf="(cartService.currentCart$ | async)===null">
+    <div class="row">
+        <div class="col-md-12">
+                <div class="card-body cart">
+                    <div class="col-sm-12 empty-cart-cls text-center"> <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+                        <h3><strong>Your Cart is Empty</strong></h3>
+                        <h4>Add something!</h4> <a routerLink="/products" class="btn btn-primary cart-btn-transform m-3" data-abc="true">continue shopping</a>
+                    </div>
+                </div>
+        </div>
     </div>
 </div>
