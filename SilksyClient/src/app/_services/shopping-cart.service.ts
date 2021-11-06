@@ -23,6 +23,8 @@ export class ShoppingCartService {
 
   constructor(private http: HttpClient, private accountService: AccountService, private toastr: ToastrService) {
     this.accountService.currentUser$.subscribe(user => this.onUserChanged(user));
+
+    this.accountService.logOutUser$.subscribe(() => this.onLogOutUser());
   }
 
   onUserChanged(user: User) {
@@ -37,11 +39,15 @@ export class ShoppingCartService {
           console.log("Failed to update cart")
         })
       }
-    } else {
-      //If we logged out clear cart
-      localStorage.removeItem('cart');
-      this.setCurrentCart(null);
-    }
+      // We dont want to log out the user here because 
+      // when reloading the page it will clear the cart
+    } 
+  }
+
+  onLogOutUser() {
+    //If we logged out clear cart
+    localStorage.removeItem('cart');
+    this.setCurrentCart(null);
   }
 
   getShoppingCart() {
