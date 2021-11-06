@@ -1,0 +1,482 @@
+[
+  {
+    "Name": "Mullins",
+    "Description": "Lorem reprehenderit cillum culpa amet esse qui fugiat et quis laborum non voluptate.",
+    "Price": 32,
+    "BrandId": 3
+  },
+  {
+    "Name": "Meghan",
+    "Description": "In dolor quis irure cupidatat qui aliquip reprehenderit occaecat eu anim.",
+    "Price": 10,
+    "BrandId": 1
+  },
+  {
+    "Name": "Isabel",
+    "Description": "Laboris magna enim cillum incididunt irure proident.",
+    "Price": 24,
+    "BrandId": 4
+  },
+  {
+    "Name": "Glenn",
+    "Description": "Qui et ut excepteur sit deserunt duis duis qui nostrud aliqua anim.",
+    "Price": 34,
+    "BrandId": 3
+  },
+  {
+    "Name": "Jeanne",
+    "Description": "Consequat sunt sint et incididunt dolor amet fugiat officia amet ullamco aliqua.",
+    "Price": 51,
+    "BrandId": 4
+  },
+  {
+    "Name": "Jody",
+    "Description": "Incididunt eu ad aliqua proident culpa tempor.",
+    "Price": 13,
+    "BrandId": 3
+  },
+  {
+    "Name": "Tanya",
+    "Description": "Ut ad deserunt consequat cupidatat non aliquip in nulla.",
+    "Price": 46,
+    "BrandId": 4
+  },
+  {
+    "Name": "Geneva",
+    "Description": "Excepteur sunt ea excepteur eiusmod officia nostrud laboris nulla proident reprehenderit proident voluptate dolore magna.",
+    "Price": 26,
+    "BrandId": 4
+  },
+  {
+    "Name": "Tia",
+    "Description": "Tempor ea qui adipisicing magna tempor magna do labore.",
+    "Price": 22,
+    "BrandId": 3
+  },
+  {
+    "Name": "Bethany",
+    "Description": "Consectetur proident eiusmod officia ullamco.",
+    "Price": 10,
+    "BrandId": 2
+  },
+  {
+    "Name": "Mercedes",
+    "Description": "Minim laborum voluptate reprehenderit laborum minim enim ut esse.",
+    "Price": 48,
+    "BrandId": 1
+  },
+  {
+    "Name": "Mays",
+    "Description": "Consectetur enim sit commodo proident quis mollit exercitation.",
+    "Price": 52,
+    "BrandId": 2
+  },
+  {
+    "Name": "Vincent",
+    "Description": "Reprehenderit consectetur tempor do sit est quis exercitation cillum et quis.",
+    "Price": 15,
+    "BrandId": 3
+  },
+  {
+    "Name": "Ivy",
+    "Description": "Minim eiusmod laborum velit consectetur et anim consectetur amet.",
+    "Price": 32,
+    "BrandId": 2
+  },
+  {
+    "Name": "Alvarado",
+    "Description": "Proident est fugiat in et culpa in.",
+    "Price": 54,
+    "BrandId": 4
+  },
+  {
+    "Name": "Lois",
+    "Description": "Magna reprehenderit minim dolor eu duis quis officia sunt.",
+    "Price": 35,
+    "BrandId": 1
+  },
+  {
+    "Name": "Edith",
+    "Description": "Sint voluptate adipisicing pariatur sunt incididunt adipisicing do id.",
+    "Price": 53,
+    "BrandId": 3
+  },
+  {
+    "Name": "Rose",
+    "Description": "Enim Lorem labore aliqua esse sit veniam fugiat reprehenderit ad magna tempor duis labore.",
+    "Price": 51,
+    "BrandId": 1
+  },
+  {
+    "Name": "Smith",
+    "Description": "Labore dolor aute minim est ea.",
+    "Price": 21,
+    "BrandId": 3
+  },
+  {
+    "Name": "Marci",
+    "Description": "Magna qui consectetur esse deserunt dolore tempor pariatur quis non esse nisi ex et.",
+    "Price": 18,
+    "BrandId": 3
+  },
+  {
+    "Name": "Buckley",
+    "Description": "Commodo sunt pariatur veniam eiusmod aute ea culpa.",
+    "Price": 21,
+    "BrandId": 2
+  },
+  {
+    "Name": "Mandy",
+    "Description": "Lorem et sint non cupidatat duis tempor aliqua amet.",
+    "Price": 37,
+    "BrandId": 1
+  },
+  {
+    "Name": "Humphrey",
+    "Description": "Anim proident tempor nostrud magna consequat ea occaecat ullamco voluptate dolor in tempor ad aute.",
+    "Price": 25,
+    "BrandId": 4
+  },
+  {
+    "Name": "Dillon",
+    "Description": "Consequat aute ipsum proident veniam eu sint veniam.",
+    "Price": 22,
+    "BrandId": 1
+  },
+  {
+    "Name": "Wade",
+    "Description": "Enim minim elit veniam id consectetur ullamco eiusmod adipisicing.",
+    "Price": 21,
+    "BrandId": 2
+  },
+  {
+    "Name": "Chandler",
+    "Description": "Consectetur dolore est id nisi.",
+    "Price": 26,
+    "BrandId": 1
+  },
+  {
+    "Name": "Burks",
+    "Description": "Aute labore esse est in deserunt quis exercitation ipsum.",
+    "Price": 43,
+    "BrandId": 2
+  },
+  {
+    "Name": "Desiree",
+    "Description": "Velit pariatur culpa sint eiusmod reprehenderit anim occaecat dolore aliquip.",
+    "Price": 49,
+    "BrandId": 2
+  },
+  {
+    "Name": "Eddie",
+    "Description": "Mollit elit nostrud eu in ea dolor ipsum irure nulla.",
+    "Price": 11,
+    "BrandId": 4
+  },
+  {
+    "Name": "Acevedo",
+    "Description": "In minim esse ad commodo deserunt duis proident.",
+    "Price": 40,
+    "BrandId": 1
+  },
+  {
+    "Name": "Consuelo",
+    "Description": "Aliqua qui nostrud laboris adipisicing.",
+    "Price": 26,
+    "BrandId": 4
+  },
+  {
+    "Name": "Rosa",
+    "Description": "Esse cillum ipsum voluptate nulla ut culpa culpa id culpa.",
+    "Price": 10,
+    "BrandId": 2
+  },
+  {
+    "Name": "Alexis",
+    "Description": "Incididunt id commodo proident esse mollit occaecat sunt tempor pariatur do sunt cupidatat.",
+    "Price": 35,
+    "BrandId": 4
+  },
+  {
+    "Name": "Brittany",
+    "Description": "Magna eiusmod ea eu est commodo dolore pariatur labore tempor ipsum amet.",
+    "Price": 16,
+    "BrandId": 1
+  },
+  {
+    "Name": "Lydia",
+    "Description": "Eiusmod aliquip dolore quis adipisicing.",
+    "Price": 20,
+    "BrandId": 3
+  },
+  {
+    "Name": "Kristie",
+    "Description": "Est exercitation fugiat anim laboris est.",
+    "Price": 47,
+    "BrandId": 3
+  },
+  {
+    "Name": "Debora",
+    "Description": "Voluptate laboris aliquip et ipsum proident mollit aliquip excepteur culpa culpa elit commodo sunt aute.",
+    "Price": 26,
+    "BrandId": 3
+  },
+  {
+    "Name": "Dunlap",
+    "Description": "Reprehenderit ut minim minim quis do non pariatur deserunt duis irure proident ex exercitation.",
+    "Price": 42,
+    "BrandId": 4
+  },
+  {
+    "Name": "Mae",
+    "Description": "Dolore est id eiusmod cillum cillum reprehenderit aliquip veniam nisi aliquip duis.",
+    "Price": 45,
+    "BrandId": 4
+  },
+  {
+    "Name": "Pamela",
+    "Description": "Qui eiusmod exercitation duis reprehenderit minim incididunt laborum.",
+    "Price": 38,
+    "BrandId": 1
+  },
+  {
+    "Name": "Andrews",
+    "Description": "Ad mollit aliqua ad dolor aliquip.",
+    "Price": 45,
+    "BrandId": 2
+  },
+  {
+    "Name": "Trevino",
+    "Description": "Exercitation elit do ad proident et aliquip culpa.",
+    "Price": 19,
+    "BrandId": 3
+  },
+  {
+    "Name": "Amber",
+    "Description": "Voluptate sunt in consectetur officia aute ut dolore.",
+    "Price": 17,
+    "BrandId": 2
+  },
+  {
+    "Name": "Daniels",
+    "Description": "Nulla non officia magna labore esse consectetur dolor minim sunt non.",
+    "Price": 34,
+    "BrandId": 3
+  },
+  {
+    "Name": "Judith",
+    "Description": "Duis esse laborum nisi ullamco consequat aute excepteur dolor incididunt commodo officia labore.",
+    "Price": 40,
+    "BrandId": 4
+  },
+  {
+    "Name": "Curry",
+    "Description": "Et Lorem ea non culpa mollit pariatur eu irure.",
+    "Price": 14,
+    "BrandId": 3
+  },
+  {
+    "Name": "Delia",
+    "Description": "Do nulla commodo aute labore eiusmod sit.",
+    "Price": 46,
+    "BrandId": 1
+  },
+  {
+    "Name": "Duke",
+    "Description": "Qui pariatur amet ad dolore incididunt consequat dolore elit non elit ut sunt magna fugiat.",
+    "Price": 17,
+    "BrandId": 3
+  },
+  {
+    "Name": "Rivers",
+    "Description": "Ex laborum ut reprehenderit proident magna.",
+    "Price": 26,
+    "BrandId": 3
+  },
+  {
+    "Name": "Roman",
+    "Description": "Eu laborum aliquip enim occaecat nulla aliquip Lorem dolore nulla ea tempor cupidatat.",
+    "Price": 46,
+    "BrandId": 4
+  },
+  {
+    "Name": "Obrien",
+    "Description": "Consectetur veniam dolor sunt eu enim.",
+    "Price": 41,
+    "BrandId": 1
+  },
+  {
+    "Name": "Harmon",
+    "Description": "Sint sit cupidatat est esse in.",
+    "Price": 27,
+    "BrandId": 2
+  },
+  {
+    "Name": "Coffey",
+    "Description": "Nisi consequat magna non sint qui.",
+    "Price": 30,
+    "BrandId": 4
+  },
+  {
+    "Name": "Deann",
+    "Description": "Reprehenderit est proident dolor sit magna.",
+    "Price": 39,
+    "BrandId": 3
+  },
+  {
+    "Name": "Chen",
+    "Description": "Commodo anim aute cupidatat laborum fugiat tempor cupidatat tempor laboris non.",
+    "Price": 45,
+    "BrandId": 3
+  },
+  {
+    "Name": "Ina",
+    "Description": "Minim do amet ad do sit officia nulla.",
+    "Price": 19,
+    "BrandId": 1
+  },
+  {
+    "Name": "Clark",
+    "Description": "Eiusmod et in culpa reprehenderit dolore adipisicing do duis deserunt consectetur amet.",
+    "Price": 11,
+    "BrandId": 4
+  },
+  {
+    "Name": "April",
+    "Description": "Ullamco labore occaecat esse velit exercitation adipisicing consectetur commodo consectetur deserunt laborum excepteur.",
+    "Price": 39,
+    "BrandId": 3
+  },
+  {
+    "Name": "Beulah",
+    "Description": "Tempor tempor labore quis aliqua occaecat.",
+    "Price": 11,
+    "BrandId": 1
+  },
+  {
+    "Name": "Odom",
+    "Description": "Aute enim commodo aliquip cillum laboris ut ea aliquip officia irure aliqua in.",
+    "Price": 53,
+    "BrandId": 1
+  },
+  {
+    "Name": "Katy",
+    "Description": "Sunt culpa commodo eiusmod enim aute adipisicing esse anim sint reprehenderit tempor.",
+    "Price": 41,
+    "BrandId": 3
+  },
+  {
+    "Name": "Corrine",
+    "Description": "Duis deserunt et sit amet.",
+    "Price": 39,
+    "BrandId": 4
+  },
+  {
+    "Name": "Roxie",
+    "Description": "Veniam aliqua ea dolore commodo sit qui ea Lorem eiusmod est proident duis incididunt quis.",
+    "Price": 31,
+    "BrandId": 2
+  },
+  {
+    "Name": "Lorna",
+    "Description": "Incididunt voluptate officia sit incididunt sint.",
+    "Price": 15,
+    "BrandId": 1
+  },
+  {
+    "Name": "Lowery",
+    "Description": "Commodo Lorem occaecat duis officia quis sint eiusmod consequat.",
+    "Price": 31,
+    "BrandId": 4
+  },
+  {
+    "Name": "Eileen",
+    "Description": "Excepteur sit cillum officia adipisicing et quis occaecat reprehenderit quis sint ad ullamco do esse.",
+    "Price": 33,
+    "BrandId": 2
+  },
+  {
+    "Name": "Carver",
+    "Description": "Ex aliqua reprehenderit ut deserunt nulla amet.",
+    "Price": 51,
+    "BrandId": 3
+  },
+  {
+    "Name": "Harris",
+    "Description": "Laboris laborum consequat commodo cupidatat incididunt nulla et eu nostrud aliquip consectetur commodo sint ullamco.",
+    "Price": 47,
+    "BrandId": 1
+  },
+  {
+    "Name": "King",
+    "Description": "Aliquip duis dolor ullamco qui ea enim laborum dolor sint.",
+    "Price": 15,
+    "BrandId": 3
+  },
+  {
+    "Name": "Bates",
+    "Description": "Labore ea ad ad fugiat dolore incididunt nulla.",
+    "Price": 34,
+    "BrandId": 3
+  },
+  {
+    "Name": "Elvira",
+    "Description": "Sit aliqua incididunt officia voluptate minim consectetur qui.",
+    "Price": 13,
+    "BrandId": 2
+  },
+  {
+    "Name": "Tate",
+    "Description": "Irure labore velit anim proident ullamco dolor fugiat fugiat amet laborum sit fugiat laborum ullamco.",
+    "Price": 33,
+    "BrandId": 1
+  },
+  {
+    "Name": "Deloris",
+    "Description": "Aliqua aliquip id occaecat incididunt veniam occaecat deserunt quis laboris.",
+    "Price": 40,
+    "BrandId": 2
+  },
+  {
+    "Name": "Tammi",
+    "Description": "Cupidatat excepteur esse dolor culpa qui elit culpa sunt nostrud adipisicing culpa.",
+    "Price": 41,
+    "BrandId": 4
+  },
+  {
+    "Name": "Karen",
+    "Description": "Nulla commodo culpa est est.",
+    "Price": 43,
+    "BrandId": 1
+  },
+  {
+    "Name": "Ballard",
+    "Description": "Eiusmod do magna mollit labore commodo.",
+    "Price": 30,
+    "BrandId": 4
+  },
+  {
+    "Name": "Leigh",
+    "Description": "Consequat occaecat adipisicing voluptate ipsum cillum sunt.",
+    "Price": 42,
+    "BrandId": 4
+  },
+  {
+    "Name": "Marylou",
+    "Description": "Magna proident officia irure quis nostrud et ipsum deserunt id.",
+    "Price": 13,
+    "BrandId": 2
+  },
+  {
+    "Name": "Reyna",
+    "Description": "Id officia labore dolore non ad qui.",
+    "Price": 38,
+    "BrandId": 3
+  },
+  {
+    "Name": "Jensen",
+    "Description": "Mollit Lorem aliquip consectetur dolore anim nostrud proident ipsum officia consequat anim et elit officia.",
+    "Price": 45,
+    "BrandId": 2
+  }
+]

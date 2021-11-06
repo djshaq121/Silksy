@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace SilksyAPI.Entities
 {
-    public class Product
+    public class Category
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public decimal Price { get; set; }
 
-        public int BrandId { get; set; }
-        public Brand Brand { get; set; }
+        [Required]
+        [MaxLength(100)]
+        public string Name { get; set; }
 
         public ICollection<ProductCategory> ProductCategories { get; set; }
     }

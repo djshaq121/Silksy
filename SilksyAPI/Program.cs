@@ -24,7 +24,10 @@ namespace SilksyAPI
             {
                 var context = services.GetRequiredService<SilksyContext>();
                 await context.Database.MigrateAsync(); // This updates the database for us
+                await Seed.SeedBrands(context);
+                await Seed.SeedCategories(context);
                 await Seed.SeedProducts(context);
+                await Seed.SeedProductCategories(context);
             }
             catch(Exception ex)
             {
