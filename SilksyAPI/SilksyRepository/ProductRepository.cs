@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using SilksyAPI.Data;
+using SilksyAPI.Dto;
 using SilksyAPI.Entities;
 using SilksyAPI.Interface;
 using System;
@@ -12,20 +15,46 @@ namespace SilksyAPI.SilksyRepository
     public class ProductRepository : IProductRepository
     {
         private readonly SilksyContext context;
+        private readonly IMapper mapper;
 
-        public ProductRepository(SilksyContext context)
+        public ProductRepository(SilksyContext context, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
-        public async Task<List<Product>> GetAllProductsAsync()
+        public async Task<List<ProductDto>> GetProductsAsync()
         {
-            return await context.Products.ToListAsync();
+            return await context.Products
+                .ProjectTo<ProductDto>(mapper.ConfigurationProvider)
+                .ToListAsync();
         }
 
         public async Task<Product> GetProductByIdAsync(int productId)
         {
             return await context.Products.SingleOrDefaultAsync(p => p.Id == productId);
+        }
+
+        public async Task<ProductDto> GetProductDtoByIdAsync(int productId)
+        {
+            return await context.Products
+                .Where(p => p.Id == productId)
+                .ProjectTo<ProductDto>(mapper.ConfigurationProvider)
+                .SingleOrDefaultAsync();
+        }
+
+        public async Task<List<BrandDto>> GetBrandsAsync()
+        {
+            return await context.Brands
+                 .ProjectTo<BrandDto>(mapper.ConfigurationProvider)
+                 .ToListAsync();
+        }
+
+        public async Task<List<CategoryDto>> GetCategoriesAsync()
+        {
+            return await context.Categories
+                .ProjectTo<CategoryDto>(mapper.ConfigurationProvider)
+                .ToListAsync();
         }
     }
 }

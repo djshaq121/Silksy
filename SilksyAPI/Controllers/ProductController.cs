@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SilksyAPI.Data;
+using SilksyAPI.Dto;
 using SilksyAPI.Entities;
 using SilksyAPI.Interface;
 using System;
@@ -22,13 +23,25 @@ namespace SilksyAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Product>>> GetProducts()
+        public async Task<ActionResult<List<ProductDto>>> GetProducts()
         {
-            var products = await productRepository.GetAllProductsAsync();
+            var products = await productRepository.GetProductsAsync();
             if (products.Count <= 0)
                 return NoContent();
 
             return Ok(products);
+        }
+
+        [HttpGet("Brands")]
+        public async Task<ActionResult<List<BrandDto>>> GetBrands()
+        {
+            return Ok(await productRepository.GetBrandsAsync());
+        }
+
+        [HttpGet("Categories")]
+        public async Task<ActionResult<List<CategoryDto>>> GetProductCategories()
+        {
+            return Ok(await productRepository.GetCategoriesAsync());
         }
     }
 }

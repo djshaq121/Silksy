@@ -36,47 +36,47 @@ namespace SilksyAPI.Controllers
         [HttpPost("UpdateCart")]
         public async Task<ActionResult<CartDto>> UpdateShoppingCart(CartDto cartDto)
         {
-            var cart = mapper.Map<Cart>(cartDto);
-
             var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var user = await userRepository.GetUserByUsernameAsync(username);
 
-            foreach(var ci in cart.CartItems)
+            var cart = new Cart();
+            foreach (var ci in cartDto.CartItems)
             {
-                // Maybe remove item if the quantity
-                if (ci.Quantity <= 0 || ci.Quantity > 100)
+                // Maybe remove item if the quantity i zero
+                if (ci.Quantity <= 0 || ci.Quantity > 10)
                     ci.Quantity = 1;
 
-               Product verifiedProduct = await productRepository.GetProductByIdAsync(ci.ProductId);
+                ProductDto verifiedProduct = await productRepository.GetProductDtoByIdAsync(ci.ProductId);
                 if (verifiedProduct == null)
                     return BadRequest("Invalid Product");
 
+                CartItem cartItem = new CartItem
+                {
+                    ProductId = verifiedProduct.Id,
+                    Quantity = ci.Quantity
+                };
 
+                cart.CartItems.Add(cartItem);
                 ci.Product = verifiedProduct;
             }
 
             var existingCart = await shoppingCartRepository.GetCartByUserIdAsync(user.Id);
 
             if (existingCart != null)
-            {
                 existingCart.CartItems = cart.CartItems;
-                cart = existingCart;
-            } 
-            else {
+            else
+            {
                 cart.User = user;
                 shoppingCartRepository.AddCart(cart);
             }
 
-            var updatedCart = mapper.Map<CartDto>(cart);
-
             var result = await shoppingCartRepository.SaveAllChangesAsync();
             if (result)
-                return Ok(updatedCart);
+                return Ok(cartDto);
 
             return BadRequest("Failed to update shopping cart");
         }
 
-       
         [Authorize]
         [HttpGet]
         public async Task<ActionResult<CartDto>> GetShoppingCart()
@@ -84,19 +84,12 @@ namespace SilksyAPI.Controllers
             var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var user = await userRepository.GetUserByUsernameAsync(username);
 
-            var cart = await shoppingCartRepository.GetCartByUserIdAsync(user.Id);
+            var cart = await shoppingCartRepository.GetCartDtoByUserIdAsync(user.Id);
 
             if (cart == null)
                 return Ok();
 
-            //Use auto mapper from cart to cartDto
-
-            var cartDto = mapper.Map<CartDto>(cart);
-
-            if (cartDto == null)
-                return BadRequest("Failed to get cart");
-
-            return Ok(cartDto);
+            return Ok(cart);
         }
 
         [Authorize]

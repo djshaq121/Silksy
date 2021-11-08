@@ -1,4 +1,5 @@
-﻿using SilksyAPI.Entities;
+﻿using SilksyAPI.Dto;
+using SilksyAPI.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace SilksyAPI
     {
         public int ProductId { get; set; }
 
-        public Product Product { get; set; }
+        public ProductDto Product { get; set; }
 
         public int Quantity { get; set; }
     }
