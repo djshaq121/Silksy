@@ -1,4 +1,4 @@
-import { Product } from "./product";
+import { IProduct } from "./product";
 
 export interface IShoppingCart {
     cartItems: ICartItem[]
@@ -6,7 +6,7 @@ export interface IShoppingCart {
 
 export interface ICartItem {
     productId: number,
-    product: Product,
+    product: IProduct,
     quantity: number
 }
 

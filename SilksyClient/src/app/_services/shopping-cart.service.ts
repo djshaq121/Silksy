@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { catchError, flatMap, map, switchMap, take } from 'rxjs/operators';
-import { Product } from '../model/product';
+import { IProduct } from '../model/product';
 import { ICartItem, IShoppingCart, ShoppingCart } from '../model/shopping-cart';
 import { User } from '../model/user';
 import { AccountService } from './account.service';
@@ -78,7 +78,7 @@ export class ShoppingCartService {
     return length;
   }
 
-  addProductToCart(product: Product, quantity: number = 1) {
+  addProductToCart(product: IProduct, quantity: number = 1) {
     const cartItem: ICartItem = { productId: product.id, product: product, quantity: quantity }
 
     let cart: IShoppingCart = this.currentCartSourse.value;
