@@ -1,7 +1,11 @@
-<div class="card mb-3" style="width: 14rem;"><!---->
-    <div class="card-body text-center">
-        <h5 class="card-title">{{product.name}}</h5>
-        <p class="card-text"><small class="text-muted">{{product.price | currency: 'GBP'}}</small></p>
-        <button class="btn btn-outline-primary  rounded-pill" (click)="addProductToCart()" >ADD TO BASKET</button>
+<div class="card mb-3 product-card">
+    <img class="card-img-top" src="../../../assets/placeholder.jpg" alt="{{product.name}}" (click)="openDetailsPage()">
+    <div class="card-body align-items-center text-center">
+        <div (click)="openDetailsPage()">
+            <h6 class="card-title mt-2">{{product.name}}</h6>
+            <p  style="font-size: xx-small;">{{product.brand}}</p>
+            <p class="card-text text-dark"><small class="text-muted">{{product.price | currency: 'GBP'}}</small></p>
+        </div>
+        <button class="btn btn-outline-primary rounded-pill mt-2" (click)="addProductToCart()">ADD TO BASKET</button>
     </div>
 </div>

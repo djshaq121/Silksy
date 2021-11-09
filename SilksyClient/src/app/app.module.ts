@@ -16,6 +16,7 @@ import { ProductCardComponent } from './products/product-card/product-card.compo
 import { JwtInterceptor } from './_interceptor/jwt.interceptor';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { BasketItemComponent } from './shopping-cart/basket-item/basket-item.component';
+import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { BasketItemComponent } from './shopping-cart/basket-item/basket-item.com
     ProductCardComponent,
     ShoppingCartComponent,
     BasketItemComponent,
+    ProductDetailComponent,
   ],
   imports: [
     BrowserModule,

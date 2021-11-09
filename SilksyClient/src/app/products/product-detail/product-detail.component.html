@@ -1,0 +1,34 @@
+<div class="row modal-body">
+    <div class="col-md-auto .img-thumbnail">
+        <img class="" style="width: 150px;"src="../../../assets/placeholder.jpg" alt="">
+    </div>
+    <div class="col-md-6">
+        <div class="">
+            <label style="font-size: 10px;">{{product.brand}}</label>
+            <h5>{{product.name}}</h5>
+            <div class="product-description">
+                {{product.description}}
+            </div>
+            <h5 class="product-price">{{product.price | currency: 'GBP'}}</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="" style="font-size: 8px; margin-top: -5px;">Quantity</label>
+                    <select class="quantity-options form-control" [(ngModel)]="selectedQuantity">
+                        <option *ngFor="let number of quantityOptions">
+                            {{number}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <button class="btn btn-sm btn-primary" style="white-space: nowrap;" (click)="addProductToCart()" *ngIf="!itemAdded">Add to Basket</button>
+                    <button class="btn btn-sm btn-primary" (click)="addProductToCart()" *ngIf="itemAdded"><i class="fa fa-check pr-1" style="color: white;" aria-hidden="true"></i>Added</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+

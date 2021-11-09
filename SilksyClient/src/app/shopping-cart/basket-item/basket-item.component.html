@@ -11,13 +11,6 @@
                 {{number}}
             </option>
         </select>
-        <!-- <div class="col-2"> 
-            <select name="" id="" class="quantity">
-                    <option value="">
-                        {{basketItem.quantity}}
-                    </option>
-            </select>
-        </div> -->
         <div class="col">{{basketItem.product.price | currency:'GBP': 'symbol'}} <span (click)="removeItemFromBasket()" class="basket-remove-item">&#10005;</span></div>
     </div>
 </div>

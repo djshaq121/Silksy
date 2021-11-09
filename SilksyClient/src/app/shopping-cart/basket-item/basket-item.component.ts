@@ -11,7 +11,7 @@ import { ShoppingCartComponent } from '../shopping-cart.component';
 })
 export class BasketItemComponent implements OnInit {
 
-  quantityOptions: number[] = [1,2,3,4,5,6,7,8,9,10]
+  quantityOptions: number[] = [1,2,3,4,5,6,7,8,9,10];
   selectedQuantity: string; // Info - The select changes the type to string so must change it to and from int
 
   @Input() basketItem: ICartItem;

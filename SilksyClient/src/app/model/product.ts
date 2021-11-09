@@ -3,6 +3,6 @@ export interface IProduct {
     name: string,
     description: string,
     price: number
-    Brand: string,
-    Categories: string[]
+    brand: string,
+    categories: string[]
 }
