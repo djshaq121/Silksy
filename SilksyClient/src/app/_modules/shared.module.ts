@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 @NgModule({
   declarations: [],
@@ -15,10 +16,12 @@ import { ModalModule } from 'ngx-bootstrap/modal';
       preventDuplicates: true,
     }),
     ModalModule.forRoot(),
+    PaginationModule.forRoot(),
   ],
   exports: [
     BsDropdownModule,
-    ModalModule
+    ModalModule,
+    PaginationModule,
   ]
 })
 export class SharedModule { }
