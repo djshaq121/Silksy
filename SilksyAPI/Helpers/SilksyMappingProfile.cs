@@ -29,8 +29,9 @@ namespace SilksyAPI.Helpers
                 .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => new Brand { Name = src.Brand })); // Do reason we need this mapping, is because I represent the brand as a string and not a BrandDto inside the productDto class
 
             CreateMap<Brand, BrandDto>()
-                .ForMember(dest => dest.Brand, opt => opt.MapFrom(b => b.Name))
                 .ReverseMap();
+
+            //.ForMember(dest => dest.Brand, opt => opt.MapFrom(b => b.Name))
 
             //CreateMap<Brand, string>()
             //    .ConvertUsing(s => s.Name ?? string.Empty);
@@ -40,8 +41,8 @@ namespace SilksyAPI.Helpers
             //.ConvertUsing(source => new Brand { Name = source });
 
             CreateMap<Category, CategoryDto>()
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(c => c.Name))
                 .ReverseMap();
+                //.ForMember(dest => dest.Name, opt => opt.MapFrom(c => c.Name))
         }
     }
 }

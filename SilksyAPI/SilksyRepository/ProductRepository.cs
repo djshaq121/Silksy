@@ -27,10 +27,16 @@ namespace SilksyAPI.SilksyRepository
         public async Task<PagedList<ProductDto>> GetProductsAsync(ProductParams productParams)
         {
             var query = context.Products
-                .ProjectTo<ProductDto>(mapper.ConfigurationProvider)
-                .AsNoTracking();
+                .AsQueryable();
 
-            return await PagedList<ProductDto>.CreateAsync(query, productParams.PageNumber, productParams.PageSize);
+            if(productParams.BrandsId.HasValue)
+                 query = query.Where(p => p.Brand.Id == productParams.BrandsId);
+            
+            if (productParams.CaetgoriesId.HasValue)
+                query = query.Where(p => p.ProductCategories.Any(pc => pc.CategoryId == productParams.CaetgoriesId));
+       
+            return await PagedList<ProductDto>.CreateAsync(query.ProjectTo<ProductDto>(mapper.ConfigurationProvider).AsNoTracking(),
+                productParams.PageNumber, productParams.PageSize);
                
         }
 

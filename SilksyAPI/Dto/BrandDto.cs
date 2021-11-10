@@ -7,6 +7,7 @@ namespace SilksyAPI.Dto
 {
     public class BrandDto
     {
-        public string Brand { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

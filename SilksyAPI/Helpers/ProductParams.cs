@@ -18,5 +18,9 @@ namespace SilksyAPI.Helpers
             get => pageSize;
             set => pageSize = (value > MaxPageSize) ? MaxPageSize : value;
         }
+
+        public int? BrandsId { get; set; }
+
+        public int? CaetgoriesId { get; set; }
     }
 }
