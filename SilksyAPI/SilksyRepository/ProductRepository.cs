@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SilksyAPI.Data;
 using SilksyAPI.Dto;
 using SilksyAPI.Entities;
+using SilksyAPI.Helpers;
 using SilksyAPI.Interface;
 using System;
 using System.Collections.Generic;
@@ -23,11 +24,14 @@ namespace SilksyAPI.SilksyRepository
             this.mapper = mapper;
         }
 
-        public async Task<List<ProductDto>> GetProductsAsync()
+        public async Task<PagedList<ProductDto>> GetProductsAsync(ProductParams productParams)
         {
-            return await context.Products
+            var query = context.Products
                 .ProjectTo<ProductDto>(mapper.ConfigurationProvider)
-                .ToListAsync();
+                .AsNoTracking();
+
+            return await PagedList<ProductDto>.CreateAsync(query, productParams.PageNumber, productParams.PageSize);
+               
         }
 
         public async Task<Product> GetProductByIdAsync(int productId)

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using SilksyAPI.Data;
 using SilksyAPI.Dto;
 using SilksyAPI.Entities;
+using SilksyAPI.Extensions;
+using SilksyAPI.Helpers;
 using SilksyAPI.Interface;
 using System;
 using System.Collections.Generic;
@@ -23,9 +25,13 @@ namespace SilksyAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ProductDto>>> GetProducts()
+        public async Task<ActionResult<List<ProductDto>>> GetProducts([FromQuery]ProductParams productParams)
         {
-            var products = await productRepository.GetProductsAsync();
+            var products = await productRepository.GetProductsAsync(productParams);
+
+            Response.AddPaginationHeader(products.CurrentPage, products.PageSize,
+                products.TotalCount, products.TotalPages);
+
             if (products.Count <= 0)
                 return NoContent();
 

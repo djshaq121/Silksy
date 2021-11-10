@@ -1,5 +1,6 @@
 ﻿using SilksyAPI.Dto;
 using SilksyAPI.Entities;
+using SilksyAPI.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace SilksyAPI.Interface
     {
         Task<Product> GetProductByIdAsync(int productId);
         Task<ProductDto> GetProductDtoByIdAsync(int productId);
-        Task<List<ProductDto>> GetProductsAsync();
+        Task<PagedList<ProductDto>> GetProductsAsync(ProductParams productParams);
 
         Task<List<BrandDto>> GetBrandsAsync();
 
