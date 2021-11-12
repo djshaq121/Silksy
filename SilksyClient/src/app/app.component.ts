@@ -4,14 +4,14 @@ import { User } from './model/user';
 import { AccountService } from './_services/account.service';
 import { ProductService } from './_services/product.service';
 import { ShoppingCartService } from './_services/shopping-cart.service';
-
+//https://coolors.co/000000-14213d-fca311-e5e5e5-ffffff - color palette
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit  {
-  title = 'SilksyClient';
+  title = 'Silksy';
 
   constructor(private accountService: AccountService, private cartService: ShoppingCartService) {}
 

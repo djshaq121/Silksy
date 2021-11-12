@@ -34,7 +34,20 @@ namespace SilksyAPI.SilksyRepository
             
             if (productParams.CaetgoriesId.HasValue)
                 query = query.Where(p => p.ProductCategories.Any(pc => pc.CategoryId == productParams.CaetgoriesId));
-       
+
+            switch (productParams.Sort)
+            {
+                case "pricedec":
+                    query = query.OrderByDescending(p => p.Price);
+                    break;
+                case "priceasc":
+                    query = query.OrderBy(p => p.Price);
+                    break;
+                default: 
+                    query = query.OrderBy(p => p.Id);
+                    break;
+            };
+
             return await PagedList<ProductDto>.CreateAsync(query.ProjectTo<ProductDto>(mapper.ConfigurationProvider).AsNoTracking(),
                 productParams.PageNumber, productParams.PageSize);
                

@@ -22,5 +22,7 @@ namespace SilksyAPI.Helpers
         public int? BrandsId { get; set; }
 
         public int? CaetgoriesId { get; set; }
+
+        public string Sort { get; set; }
     }
 }
