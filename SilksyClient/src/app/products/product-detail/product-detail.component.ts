@@ -34,7 +34,6 @@ export class ProductDetailComponent implements OnInit {
   itemAddedSuccessfully() {
     this.itemAdded = true
     timer(2000).subscribe(() => {
-      console.log("added");
       this.itemAdded = false;
     })
   }

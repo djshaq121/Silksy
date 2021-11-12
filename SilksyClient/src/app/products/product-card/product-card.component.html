@@ -6,6 +6,10 @@
             <p  style="font-size: xx-small;">{{product.brand}}</p>
             <p class="card-text text-dark"><small class="text-muted">{{product.price | currency: 'GBP'}}</small></p>
         </div>
-        <button class="btn btn-outline-primary rounded-pill mt-2" (click)="addProductToCart()">ADD TO BASKET</button>
+        <button *ngIf="!itemAdded" class="btn btn-outline-primary rounded-pill mt-2" (click)="addProductToCart()">ADD TO BASKET</button>
+        <button *ngIf="itemAdded" class="btn btn-outline-primary rounded-pill mt-2" (click)="addProductToCart()">
+            <i class="fa fa-check pr-1"  aria-hidden="true"></i>
+            Added
+        </button>
     </div>
 </div>
