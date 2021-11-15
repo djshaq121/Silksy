@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SilksyAPI.Entities;
 using System;
 using System.Collections.Generic;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SilksyAPI.Data
 {
-    public class SilksyContext : DbContext
+    public class SilksyContext : IdentityDbContext<StoreUser, IdentityRole<int>, int>
     {
         public SilksyContext(DbContextOptions options) : base(options)
         {
@@ -41,7 +43,6 @@ namespace SilksyAPI.Data
             //    .IsRequired();
         }
 
-        public DbSet<StoreUser> Users { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Brand> Brands { get; set; }

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SilksyAPI.Data;
+using SilksyAPI.Entities;
 using SilksyAPI.Helpers;
 using SilksyAPI.Interface;
 using SilksyAPI.Services;
@@ -49,6 +51,18 @@ namespace SilksyAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SilksyAPI", Version = "v1" });
             });
+            services.AddIdentityCore<StoreUser>(options =>
+            {
+                options.Password.RequiredLength = 4;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredUniqueChars = 1;
+                options.Password.RequireDigit = false;
+            })
+                .AddRoles<IdentityRole<int>>()
+                .AddSignInManager<SignInManager<StoreUser>>()
+                .AddEntityFrameworkStores<SilksyContext>();
+                
             services.AddCors();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

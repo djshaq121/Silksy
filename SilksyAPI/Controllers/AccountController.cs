@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -19,15 +20,17 @@ namespace SilksyAPI.Controllers
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
-        private readonly SilksyContext context;
+        private readonly UserManager<StoreUser> userManager;
+        private readonly SignInManager<StoreUser> signInManager;
         private readonly IMapper mapper;
         private readonly ILogger<AccountController> logger;
         private readonly ITokenService tokenService;
 
-        public AccountController(SilksyContext context, IMapper mapper, 
+        public AccountController(UserManager<StoreUser> userManager, SignInManager<StoreUser> signInManager, IMapper mapper, 
             ILogger<AccountController> logger, ITokenService tokenService)
         {
-            this.context = context;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
             this.mapper = mapper;
             this.logger = logger;
             this.tokenService = tokenService;
@@ -36,35 +39,17 @@ namespace SilksyAPI.Controllers
         [HttpPost("Register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
-            var userNameFound = await context.Users.SingleOrDefaultAsync(storeUser => storeUser.UserName == registerDto.Username);
-            if (userNameFound != null)
-                return BadRequest("A User with this username already exist");
-
-            var emailFound = await context.Users.SingleOrDefaultAsync(storeUser => storeUser.Email == registerDto.Email);
-            if (emailFound != null)
-                return BadRequest("A User with this email already exist");
+            
+            if (await userManager.FindByNameAsync(registerDto.Username) != null)
+                return BadRequest("Username is taken");
 
             // Map Data
             var user = mapper.Map<StoreUser>(registerDto);
 
-            //Hash password 
-            using var hmac = new HMACSHA512();
+            var result = await userManager.CreateAsync(user, registerDto.Password);
 
-            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
-            user.PasswordSalt = hmac.Key;
-
-            //Add to table tracking but not to db thats why we dont need to await
-             context.Users.Add(user);
-
-            // Save Databse
-            try
-            {
-             var result = await context.SaveChangesAsync();
-
-            } catch (Exception ex)
-            {
-                logger.LogError(ex.Message);
-            }
+            if (!result.Succeeded)
+                return BadRequest(result.Errors);
 
             return new UserDto
             {
@@ -76,18 +61,14 @@ namespace SilksyAPI.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            var user = await context.Users.SingleOrDefaultAsync(storeUser => storeUser.UserName == loginDto.Username);
+            var user = await userManager.FindByNameAsync(loginDto.Username); // context.Users.SingleOrDefaultAsync(storeUser => storeUser.UserName == loginDto.Username);
             if (user == null)
                 return BadRequest("Username or password is incorrect");
-            
-            var hmac = new HMACSHA512(user.PasswordSalt);
-            var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
 
-            for(int i =0; i < hash.Length; i++)
-            {
-                if (hash[i] != user.PasswordHash[i])
-                    return BadRequest("Username or password is incorrect");
-            }
+            var result = await signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+
+            if (!result.Succeeded)
+                BadRequest("Username or password is incorrect");
 
             return new UserDto
             {
