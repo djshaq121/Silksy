@@ -32,6 +32,26 @@ namespace SilksyAPI.Data
                .WithMany(c => c.ProductCategories)
                .HasForeignKey(pc => pc.CategoryId);
 
+            builder.Entity<Order>()
+                .HasOne(o => o.BillingAddress)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Order>()
+                .HasOne(o => o.ShippingAddress)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<UserAddress>()
+                .HasOne(ua => ua.User)
+                .WithMany(u => u.Addresses)
+                .HasForeignKey(ua => ua.UserId);
+
+            builder.Entity<UserAddress>()
+                .HasOne(ua => ua.Address)
+                .WithMany(a => a.UserAddresses)
+                .HasForeignKey(ua => ua.AddressId);
+
             //builder.Entity<Product>()
             //    .HasOne(p => p.Brand)
             //    .WithOne()
@@ -48,5 +68,9 @@ namespace SilksyAPI.Data
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+
     }
 }
