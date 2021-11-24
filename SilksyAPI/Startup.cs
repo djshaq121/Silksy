@@ -17,6 +17,7 @@ using SilksyAPI.Helpers;
 using SilksyAPI.Interface;
 using SilksyAPI.Services;
 using SilksyAPI.SilksyRepository;
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,10 +39,11 @@ namespace SilksyAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(SilksyMappingProfile).Assembly);
-            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<ITokenService, Services.TokenService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
+            services.AddScoped<IPaymentService, PaymentService>();
             services.AddDbContext<SilksyContext>(options => 
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
@@ -80,6 +82,9 @@ namespace SilksyAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            StripeConfiguration.ApiKey = Configuration.GetValue<string>("StripeApiKey");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -91,7 +96,7 @@ namespace SilksyAPI
 
             app.UseRouting();
 
-            app.UseCors(opt => opt.WithOrigins("https://localhost:4200").AllowAnyMethod().AllowAnyHeader());
+            app.UseCors(opt => opt.WithOrigins("https://localhost:4200", "https://checkout.stripe").AllowAnyMethod().AllowAnyHeader());
 
             app.UseAuthentication();
 

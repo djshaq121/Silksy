@@ -15,8 +15,11 @@ export class ShoppingCartService {
   private currentCartSourse = new BehaviorSubject<IShoppingCart>(null);
   currentCart$ = this.currentCartSourse.asObservable();
 
-  private cartTotalSourse = new BehaviorSubject<number>(null);
+  private cartTotalSourse = new BehaviorSubject<number>(0);
   cartTotal$ = this.cartTotalSourse.asObservable();
+
+  private cartLengthSource = new BehaviorSubject<number>(0);
+  cartLength$ = this.cartLengthSource.asObservable();
 
   baseUrl = "https://localhost:5001/api/";
   user: User = null;
@@ -61,12 +64,14 @@ export class ShoppingCartService {
 
   setCurrentCart(cart: IShoppingCart) {
     this.currentCartSourse.next(cart);
+    this.cartTotalSourse.next(this.calculateShoppingCartTotal(cart));
+    this.cartLengthSource.next(this.getCartLength(cart));
   }
 
   getShoppingCartFromServer() {
     return this.http.get<IShoppingCart>(this.baseUrl + 'ShoppingCart').pipe(
       map((cart: IShoppingCart) => {
-        this.currentCartSourse.next(cart);
+        this.setCurrentCart(cart);
         return cart;
       })
     )
@@ -177,6 +182,15 @@ export class ShoppingCartService {
       cartItems[index].quantity += itemToAdd.quantity;
     }
     return cartItems;
+  }
+
+  private calculateShoppingCartTotal(cart: IShoppingCart): number {
+    let total = 0;
+    cart?.cartItems?.forEach(item => {
+      total += item.product.price * item.quantity;
+    })
+
+    return total;
   }
 }
 

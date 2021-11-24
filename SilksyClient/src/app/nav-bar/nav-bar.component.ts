@@ -12,7 +12,6 @@ import { ShoppingCartService } from '../_services/shopping-cart.service';
 })
 export class NavBarComponent implements OnInit {
   shoppingCart: IShoppingCart;
-  shoppingCartTotalLength: number;
   cartSubscription: Subscription;
 
   constructor(public accountService: AccountService, public shoppingCartService: ShoppingCartService, private router: Router ) { 
@@ -21,7 +20,7 @@ export class NavBarComponent implements OnInit {
   ngOnInit(): void {
     this.cartSubscription = this.shoppingCartService.currentCart$.subscribe(x => {
       this.shoppingCart = x
-      this.shoppingCartTotalLength = this.shoppingCartService.getCartLength(x)});
+      });
 
   }
 

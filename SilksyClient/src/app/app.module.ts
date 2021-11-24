@@ -18,6 +18,7 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { BasketItemComponent } from './shopping-cart/basket-item/basket-item.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { CheckoutSuccessComponent } from './checkout/checkout-success/checkout-success.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
     BasketItemComponent,
     ProductDetailComponent,
     CheckoutComponent,
+    CheckoutSuccessComponent,
   ],
   imports: [
     BrowserModule,

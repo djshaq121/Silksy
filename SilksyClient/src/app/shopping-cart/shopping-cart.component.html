@@ -5,7 +5,7 @@
             <div class="col">
                 <h4><b>Shopping Cart</b></h4>
             </div>
-            <div class="col align-self-center text-right text-muted">3 items</div>
+            
         </div>
     </div>
     <div class="col-8 card mr-4">
@@ -14,9 +14,17 @@
         </div>
     </div>
     <div class="col card">
-        <h5 class="card-title"> Total </h5>
-
-        <button class="btn btn-primary" routerLink="/checkout"> Checkout </button>
+        <div class="mt-2">
+            <h5><b>Summary</b></h5>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col align-self-center text-left text-muted">{{(cartService.cartLength$ | async)}} items</div>
+            <div class="col text-right">{{(cartService.cartTotal$ | async | currency:'GBP': 'symbol')}}</div>
+        </div>
+        <hr>
+        <h5 class="card-title mb-4"> Total:  {{(cartService.cartTotal$ | async | currency:'GBP': 'symbol')}}</h5>
+        <button class="btn btn-primary mb-3" routerLink="/checkout"> Checkout </button>
     </div>
 </div>
 

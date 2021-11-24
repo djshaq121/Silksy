@@ -31,9 +31,8 @@
                 </div>
             </div>
             <div class="nav-item">
-                <!-- (ShoppingCartService.currentCart$ | async).cartItems.length -->
                 <a class="nav-item position-relative" routerLink="/cart">
-                    <i class="fa fa-shopping-cart mr-3 fa-lg"><span *ngIf="shoppingCartTotalLength > 0" class="cartCount">{{ shoppingCartTotalLength }}</span>
+                    <i class="fa fa-shopping-cart mr-3 fa-lg"><span *ngIf="(shoppingCartService.cartLength$ | async) > 0" class="cartCount">{{ shoppingCartService.cartLength$ | async }}</span>
                     </i>
                 </a>
             </div>
