@@ -16,9 +16,8 @@ namespace SilksyAPI.Helpers
 
             CreateMap<Cart, CartDto>()
                 .ForMember(dest => dest.CartItems, opt => opt.MapFrom(s => s.CartItems))
-                .ReverseMap()
-                .ForAllOtherMembers(x => x.Ignore());
-
+                .ReverseMap();
+                
             CreateMap<CartItem, CartItemDto>().ReverseMap();
 
             CreateMap<Product, ProductDto>()
@@ -31,11 +30,18 @@ namespace SilksyAPI.Helpers
             CreateMap<Brand, BrandDto>()
                 .ReverseMap();
 
+            CreateMap<AddressDto, Address>()
+                    .ReverseMap();
+
+            CreateMap<CartItem, OrderItem>()
+                .ForMember(o => o.Id, opt => opt.Ignore())
+                .ForMember(o => o.UnitPrice, opt => opt.MapFrom(src => src.Product.Price));
+
             //.ForMember(dest => dest.Brand, opt => opt.MapFrom(b => b.Name))
 
             //CreateMap<Brand, string>()
             //    .ConvertUsing(s => s.Name ?? string.Empty);
-            
+
             // Stack Overflow second anwser
             //CreateMap<string, Brand>()
             //.ConvertUsing(source => new Brand { Name = source });

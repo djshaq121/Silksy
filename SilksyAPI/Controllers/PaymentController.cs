@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using SilksyAPI.Interface;
 using Stripe;
 using Stripe.Checkout;
@@ -18,13 +19,15 @@ namespace SilksyAPI.Controllers
         private readonly IPaymentService paymentService;
         private readonly IUserRepository userRepository;
         private readonly IShoppingCartRepository shoppingCartRepository;
+        private readonly IConfiguration configuration;
 
         public PaymentController(IPaymentService paymentService, IUserRepository userRepository,
-            IShoppingCartRepository shoppingCartRepository)
+            IShoppingCartRepository shoppingCartRepository, IConfiguration configuration)
         {
             this.paymentService = paymentService;
             this.userRepository = userRepository;
             this.shoppingCartRepository = shoppingCartRepository;
+            this.configuration = configuration;
         }
 
         [HttpPost]
@@ -52,7 +55,13 @@ namespace SilksyAPI.Controllers
             return Ok(new { checkoutSessionUrl = session.Url });
         }
 
-        [HttpPost("paymentIntent")]
+        [HttpGet("PublishKey")]
+        public ActionResult GetStripePublishableKey()
+        {
+            return Ok(new { StripePublishKey = configuration.GetValue<string>("StripeApiPublishableKey") });
+        }
+
+        [HttpPost("PaymentIntent")]
         [Authorize]
         public async Task<ActionResult> CreatePaymentIntent()
         {
@@ -62,17 +71,26 @@ namespace SilksyAPI.Controllers
             var cart = await shoppingCartRepository.GetCartByUserIdAsync(user.Id);
 
             var paymentIntentService = new PaymentIntentService();
-            var paymentIntent = paymentIntentService.Create(new PaymentIntentCreateOptions
+            PaymentIntent paymentIntent;
+            try
             {
-                Amount = paymentService.CalculateOrderAmountFromCart(cart),
-                Currency = "gbp",
-                AutomaticPaymentMethods = new PaymentIntentAutomaticPaymentMethodsOptions
+                paymentIntent = paymentIntentService.Create(new PaymentIntentCreateOptions
                 {
-                    Enabled = true,
-                },
-            });
+                    Amount = paymentService.CalculateOrderAmountFromCart(cart),
+                    Currency = "gbp",
+                    AutomaticPaymentMethods = new PaymentIntentAutomaticPaymentMethodsOptions
+                    {
+                        Enabled = true,
+                    },
+                });
 
-            return Ok(new { clientSecret = paymentIntent.ClientSecret });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = new { Message = ex.Message, } });
+            }
+
+            return Ok(new { clientSecret = paymentIntent.ClientSecret, paymentIntentId = paymentIntent.Id });
         }
     }
 }

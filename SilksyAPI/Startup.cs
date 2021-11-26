@@ -83,7 +83,7 @@ namespace SilksyAPI
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-            StripeConfiguration.ApiKey = Configuration.GetValue<string>("StripeApiKey");
+            StripeConfiguration.ApiKey = Configuration.GetValue<string>("StripeApiPrivateKey");
 
             if (env.IsDevelopment())
             {

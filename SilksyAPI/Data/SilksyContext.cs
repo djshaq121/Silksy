@@ -52,6 +52,7 @@ namespace SilksyAPI.Data
                 .WithMany(a => a.UserAddresses)
                 .HasForeignKey(ua => ua.AddressId);
 
+
             //builder.Entity<Product>()
             //    .HasOne(p => p.Brand)
             //    .WithOne()
@@ -71,6 +72,8 @@ namespace SilksyAPI.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<UserAddress> UserAddresses { get; set; }
+
 
     }
 }

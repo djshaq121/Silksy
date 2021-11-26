@@ -54,7 +54,8 @@ namespace SilksyAPI.Controllers
             return new UserDto
             {
                 Username = user.UserName,
-                Token = tokenService.CreateToken(user)
+                Token = tokenService.CreateToken(user),
+                Email = user.Email
             };
         }
 
@@ -73,7 +74,8 @@ namespace SilksyAPI.Controllers
             return new UserDto
             {
                 Username = user.UserName,
-                Token = tokenService.CreateToken(user)
+                Token = tokenService.CreateToken(user),
+                Email = user.Email
             };
         }
     }

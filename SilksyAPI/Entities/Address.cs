@@ -15,7 +15,6 @@ namespace SilksyAPI.Entities
         [MaxLength(200)]
         public string AddressLine1 { get; set; }
 
-        [Required]
         [MaxLength(200)]
         public string AddressLine2 { get; set; }
 
