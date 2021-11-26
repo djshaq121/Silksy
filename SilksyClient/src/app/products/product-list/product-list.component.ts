@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, forkJoin } from 'rxjs';
 import { IBrand } from 'src/app/model/brand';
 import { ICategory } from 'src/app/model/category';
 import { IPagination } from 'src/app/model/pagination';
 import { IProduct } from 'src/app/model/product';
-import { ProductParams } from 'src/app/model/productParams';
 import { ProductService } from 'src/app/_services/product.service';
 
 @Component({
@@ -19,6 +19,9 @@ export class ProductListComponent implements OnInit {
   sortBy: string;
   brands: IBrand[] = [];
   categories: ICategory[] =[];
+
+  private isFilterLoadingSource = new BehaviorSubject<number>(0);
+  isFilterLoading$ = this.isFilterLoadingSource.asObservable();
 
   constructor(public productService: ProductService) { }
 
@@ -45,13 +48,25 @@ export class ProductListComponent implements OnInit {
   }
 
   getBrands() {
+    this.isFilterLoadingSource.next(+1);
     this.productService.getBrands().subscribe(brands => 
-      this.brands = brands
+        {
+          this.brands = brands
+          this.isFilterLoadingSource.next(-1);
+        }, error => {
+          this.isFilterLoadingSource.next(-1);
+        }
       );
   }
 
   getCategories() {
-    this.productService.getCategories().subscribe(categories => this.categories = categories);
+    this.isFilterLoadingSource.next(+1);
+    this.productService.getCategories().subscribe(categories => {
+      this.categories = categories;
+      this.isFilterLoadingSource.next(-1);
+    }, error => {
+      this.isFilterLoadingSource.next(-1);
+    });
   }
 
   pageChanged(event: any) {

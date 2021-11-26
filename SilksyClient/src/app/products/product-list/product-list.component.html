@@ -1,4 +1,7 @@
-<section id="sidebar">
+<section id="sidebar" >
+    <!-- <div class="spinner-border" *ngIf="(isFilterLoading$ | async) > 0">
+
+    </div> -->
     <div>
         <h6 class="p-1 border-bottom">Sort By</h6>
         <select [(ngModel)]="sortBy" class="form-select list-group-item list-group-item-action mt-2 mb-2 rounded" aria-label="Default select example" (change)="onSortChange(sortBy)">

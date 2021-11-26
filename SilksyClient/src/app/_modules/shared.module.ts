@@ -4,6 +4,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [],
@@ -17,11 +18,13 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     }),
     ModalModule.forRoot(),
     PaginationModule.forRoot(),
+    NgxSpinnerModule
   ],
   exports: [
     BsDropdownModule,
     ModalModule,
     PaginationModule,
+    NgxSpinnerModule
   ]
 })
 export class SharedModule { }
