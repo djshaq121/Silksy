@@ -19,6 +19,7 @@ import { BasketItemComponent } from './shopping-cart/basket-item/basket-item.com
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { CheckoutSuccessComponent } from './checkout/checkout-success/checkout-success.component';
+import { LoadingInterceptor } from './_interceptor/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { CheckoutSuccessComponent } from './checkout/checkout-success/checkout-s
     
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
