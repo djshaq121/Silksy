@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Address } from '../model/address';
@@ -7,6 +8,7 @@ import { OrderParams } from '../model/orderParams';
 import { IPaymentIntentModel } from '../model/paymentIntent';
 import { AccountService } from '../_services/account.service';
 import { CheckoutService } from '../_services/checkout.service';
+import { ShoppingCartService } from '../_services/shopping-cart.service';
 
 declare const Stripe;
 
@@ -28,7 +30,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   isLoadingPaymentSubmission: boolean = false;
   paymentIntentId: string = "";
 
-  constructor(private formBuilder: FormBuilder, private accountService: AccountService, private checkoutService: CheckoutService) { }
+  constructor(private formBuilder: FormBuilder, private accountService: AccountService, 
+    private checkoutService: CheckoutService, private router: Router, public cartService: ShoppingCartService) { }
   
   ngOnInit(): void {
     this.checkoutForm = this.formBuilder.group({
@@ -95,9 +98,10 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       //confirmParams: {
         //   receipt_email: userEmail ,
         // }
-      if (paymentIntent?.status === 'succeeded') {
-        // TODO - Redirect user to success page
+      if (paymentIntent) {
+        this.cartService.deleteShoppingCart();
         this.isLoadingPaymentSubmission = false;
+        this.router.navigate(['checkout/success'], {state: order});
         return;
       }
   

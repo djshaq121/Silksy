@@ -5,12 +5,12 @@ export class Address {
         this.addressLine2 = addressLine2;
         this.country = country;
         this.city = city;
-        this.postCode = postCode;
+        this.postcode = postCode;
     }
 
     addressLine1: string;
     addressLine2: string;
     city: string;
     country: string;
-    postCode: string;
+    postcode: string;
 }

@@ -44,6 +44,7 @@ namespace SilksyAPI
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
             services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddDbContext<SilksyContext>(options => 
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));

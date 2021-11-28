@@ -16,7 +16,6 @@ namespace SilksyAPI.Services
     {
         private readonly IConfiguration config;
         private readonly IShoppingCartRepository shoppingCartRepository;
-        private readonly SilksyContext context;
 
         public PaymentService(IConfiguration config, IShoppingCartRepository shoppingCartRepository)
         {
@@ -67,5 +66,14 @@ namespace SilksyAPI.Services
             return SessionLineItems;
         }
 
+        public async Task<ActionResult> HandlePaymentIntentFailedAsync(string paymentIntentId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<ActionResult> HandlePaymentIntentSucceededAsync(string paymentIntentId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

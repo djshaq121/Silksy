@@ -21,16 +21,35 @@ namespace SilksyAPI.Controllers
         private readonly IPaymentService paymentService;
         private readonly IUserRepository userRepository;
         private readonly IShoppingCartRepository shoppingCartRepository;
+        private readonly IOrderRepository orderRepository;
         private readonly IMapper mapper;
 
         public OrderController(SilksyContext context, IPaymentService paymentService, IUserRepository userRepository, 
-            IShoppingCartRepository shoppingCartRepository, IMapper mapper)
+            IShoppingCartRepository shoppingCartRepository, IOrderRepository orderRepository ,IMapper mapper)
         {
             this.context = context;
             this.paymentService = paymentService;
             this.userRepository = userRepository;
             this.shoppingCartRepository = shoppingCartRepository;
+            this.orderRepository = orderRepository;
             this.mapper = mapper;
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult> GetOrder([FromQuery]int orderId)
+        {
+            // User should only get the order they own
+            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await userRepository.GetUserByUsernameAsync(username);
+
+            var order = await orderRepository.GetUserOrderAsync(orderId, user);
+            if (order == null)
+                return BadRequest("Order not found");
+
+            var orderDto = mapper.Map<OrderDto>(order);
+
+            return Ok(orderDto);
         }
 
         [HttpPost("CreateOrder")]

@@ -1,1 +1,50 @@
-<p>checkout-success works!</p>
+<div class="row g-0" *ngIf="order">
+    <span class="col-md-1"><i class="fa fa-check-circle fa-4x" style="color:green; vertical-align: text-top;"></i></span>
+    <h4 class="col-md-8">Thank you for your order</h4>
+
+    <hr class="my-4">
+
+    
+    <div class="col-sm-6">
+        <h6>Order Date</h6>
+        <p>{{order?.orderDate | date : 'longDate' }}</p>
+    </div>
+    <div class="col-sm-4">
+        <h6>Delivery Address</h6>
+        <span>{{order.shippingAddress.addressLine1}}, </span>
+        <span *ngIf="order.shippingAddress?.addressLine2">{{order.shippingAddress.addressLine2}}, </span>
+        <span *ngIf="order.shippingAddress?.country">{{order.shippingAddress.country}}, </span>
+        <span>{{order.shippingAddress.city}}, </span>
+        <span>{{order.shippingAddress.postcode}}</span>
+    </div>
+  
+    <hr class="my-4">
+
+    <div>
+        <h6>Your Orders: </h6>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item pl-0" *ngFor="let item of order?.orderItems">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex flex-column justify-content-between">
+                        <div><span class="d-block font-weight-bold"> {{item.product.name}}</span></div><span class="fs-12">Qty: {{item.quantity}}</span>
+                    </div>
+                    <div class="product-price">
+                        <h5>{{item.unitPrice | currency:'GBP': 'symbol' }}</h5>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-12 d-flex justify-content-end">
+        <div class="d-flex justify-content-between font-weight-bold">
+            <span class="">Total: </span>
+            <span class="">
+                {{order.totalPrice | currency:'GBP': 'symbol'}}
+            </span>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!order">
+
+</div>

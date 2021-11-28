@@ -36,5 +36,7 @@ namespace SilksyAPI.Entities
 
         public Address ShippingAddress { get; set; }
 
+        public decimal TotalPrice { get { return OrderItems.Sum(ot => ot.UnitPrice * ot.Quantity);  } }
+
     }
 }

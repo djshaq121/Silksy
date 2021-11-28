@@ -1,4 +1,5 @@
-﻿using SilksyAPI.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using SilksyAPI.Entities;
 using Stripe.Checkout;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,9 @@ namespace SilksyAPI.Interface
         public int CalculateOrderAmountFromCart(Cart cart);
 
         public List<SessionLineItemOptions> CreateItemsFromCart(Cart cart);
+
+        public Task<ActionResult> HandlePaymentIntentSucceededAsync(string paymentIntentId);
+
+        public Task<ActionResult> HandlePaymentIntentFailedAsync(string paymentIntentId);
     }
 }

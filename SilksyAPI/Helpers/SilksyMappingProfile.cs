@@ -37,18 +37,18 @@ namespace SilksyAPI.Helpers
                 .ForMember(o => o.Id, opt => opt.Ignore())
                 .ForMember(o => o.UnitPrice, opt => opt.MapFrom(src => src.Product.Price));
 
-            //.ForMember(dest => dest.Brand, opt => opt.MapFrom(b => b.Name))
-
-            //CreateMap<Brand, string>()
-            //    .ConvertUsing(s => s.Name ?? string.Empty);
-
             // Stack Overflow second anwser
             //CreateMap<string, Brand>()
             //.ConvertUsing(source => new Brand { Name = source });
 
             CreateMap<Category, CategoryDto>()
                 .ReverseMap();
-                //.ForMember(dest => dest.Name, opt => opt.MapFrom(c => c.Name))
+            //.ForMember(dest => dest.Name, opt => opt.MapFrom(c => c.Name))
+
+            CreateMap<OrderItem, OrderItemsDto>();
+
+            CreateMap<Order, OrderDto>();
+
         }
     }
 }

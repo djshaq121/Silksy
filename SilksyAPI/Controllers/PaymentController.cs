@@ -6,6 +6,7 @@ using Stripe;
 using Stripe.Checkout;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -58,7 +59,7 @@ namespace SilksyAPI.Controllers
         [HttpGet("PublishKey")]
         public ActionResult GetStripePublishableKey()
         {
-            return Ok(new { StripePublishKey = configuration.GetValue<string>("StripeApiPublishableKey") });
+            return Ok(new { StripePublishKey = configuration.GetValue<string>("StripeSettings:PublishableKey") });
         }
 
         [HttpPost("PaymentIntent")]
@@ -92,5 +93,46 @@ namespace SilksyAPI.Controllers
 
             return Ok(new { clientSecret = paymentIntent.ClientSecret, paymentIntentId = paymentIntent.Id });
         }
+
+        [HttpPost("Webhook")]
+        public async Task<ActionResult> WebHook()
+        {
+            var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
+            string endpointSecret = configuration.GetValue<string>("StripeSettings:WHSecret");
+            try
+            {
+                var stripeEvent = EventUtility.ParseEvent(json);
+                var signatureHeader = Request.Headers["Stripe-Signature"];
+
+                stripeEvent = EventUtility.ConstructEvent(json,
+                        signatureHeader, endpointSecret);
+
+                if (stripeEvent.Type == Events.PaymentIntentSucceeded)
+                {
+                    var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
+                    //await paymentService.HandlePaymentIntentSucceededAsync(paymentIntent.Id);
+                }
+                else if (stripeEvent.Type == Events.PaymentIntentPaymentFailed)
+                {
+                    var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
+                    // await paymentService.HandlePaymentIntentFailedAsync(paymentIntent.Id);
+                }
+                else
+                {
+                    Console.WriteLine("Unhandled event type: {0}", stripeEvent.Type);
+                }
+                return Ok();
+            }
+            catch (StripeException e)
+            {
+                Console.WriteLine("Error: {0}", e.Message);
+                return BadRequest();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500);
+            }
+        }
+    
     }
 }
