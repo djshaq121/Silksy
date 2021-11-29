@@ -1,62 +1,65 @@
-<section id="sidebar" >
-    <!-- <div class="spinner-border" *ngIf="(isFilterLoading$ | async) > 0">
-
-    </div> -->
-    <div>
-        <h6 class="p-1 border-bottom">Sort By</h6>
-        <select [(ngModel)]="sortBy" class="form-select list-group-item list-group-item-action mt-2 mb-2 rounded" aria-label="Default select example" (change)="onSortChange(sortBy)">
-            <option value="featured">Featured</option>
-            <option value="priceasc">Price: Low to High</option>
-            <option value="pricedec">Price: High to low</option>
-        </select>
+<div style="padding-top: 70px; width: 90%; margin: auto">
+    <section id="sidebar" style="padding-top: 0px;">
+        <!-- <div class="spinner-border" *ngIf="(isFilterLoading$ | async) > 0">
+    
+        </div> -->
+        <div>
+            <h6 class="p-1 border-bottom">Sort By</h6>
+            <select [(ngModel)]="sortBy" class="form-select list-group-item list-group-item-action mt-2 mb-2 rounded" aria-label="Default select example" (change)="onSortChange(sortBy)">
+                <option value="featured">Featured</option>
+                <option value="priceasc">Price: Low to High</option>
+                <option value="pricedec">Price: High to low</option>
+            </select>
+        </div>
+        <div>
+            <h6 class="p-1 border-bottom">Filter By</h6>
+            <h6 class="mb-2">Brands</h6>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-action mb-2 rounded" 
+                    *ngFor="let brand of brands" 
+                    [value]="brand.id" 
+                    (click)="onBrandSelected(brand.id)"
+                    [ngClass]="{'selected' : brand.id == productService.productParams.brandId}"
+                    > 
+                        {{brand.name}} 
+                 </li> 
+            </ul>
+        </div>
+        <div>
+            <h6>Hair Category</h6>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-action mb-2 rounded" 
+                    *ngFor="let category of categories" 
+                    [value]="category.id" 
+                    (click)="onCategorySelected(category.id)"
+                    [ngClass]="{'selected' : category.id == productService.productParams.categoriesId}"
+                    > 
+                        {{category.name}} 
+                 </li> 
+            </ul>
+        </div>
+    </section>
+    
+    
+    <!-- justify-content-center --> <!--Main Content-->
+    <div class="row">
+        <div class="col-md-3" *ngFor="let product of products">
+            <app-product-card [product]='product'></app-product-card>
+        </div>
     </div>
-    <div>
-        <h6 class="p-1 border-bottom">Filter By</h6>
-        <h6 class="mb-2">Brands</h6>
-        <ul class="list-group">
-            <li class="list-group-item list-group-item-action mb-2 rounded" 
-                *ngFor="let brand of brands" 
-                [value]="brand.id" 
-                (click)="onBrandSelected(brand.id)"
-                [ngClass]="{'selected' : brand.id == productService.productParams.brandId}"
-                > 
-                    {{brand.name}} 
-             </li> 
-        </ul>
+    
+    <div class="d-flex justify-content-center" *ngIf="pagination?.totalItems > 0">
+        <pagination 
+        [boundaryLinks]="true" 
+        [totalItems]="pagination.totalItems"
+        [itemsPerPage]="pagination.itemsPerPage"
+        [(ngModel)]="pagination.currentPage"
+        (pageChanged)="pageChanged($event)"
+        previousText="&rsaquo;"
+        nextText="&rsaquo;" 
+        firstText="&laquo;" 
+        lastText="&raquo;">
+        </pagination>
     </div>
-    <div>
-        <h6>Hair Category</h6>
-        <ul class="list-group">
-            <li class="list-group-item list-group-item-action mb-2 rounded" 
-                *ngFor="let category of categories" 
-                [value]="category.id" 
-                (click)="onCategorySelected(category.id)"
-                [ngClass]="{'selected' : category.id == productService.productParams.categoriesId}"
-                > 
-                    {{category.name}} 
-             </li> 
-        </ul>
-    </div>
-</section>
 
-
-<!-- justify-content-center --> <!--Main Content-->
-<div class="row">
-    <div class="col-md-3 d-flex align-items-stretch" *ngFor="let product of products">
-        <app-product-card [product]='product'></app-product-card>
-    </div>
-</div>
-
-<div class="d-flex justify-content-center" *ngIf="pagination?.totalItems > 0">
-    <pagination 
-    [boundaryLinks]="true" 
-    [totalItems]="pagination.totalItems"
-    [itemsPerPage]="pagination.itemsPerPage"
-    [(ngModel)]="pagination.currentPage"
-    (pageChanged)="pageChanged($event)"
-    previousText="&rsaquo;"
-    nextText="&rsaquo;" 
-    firstText="&laquo;" 
-    lastText="&raquo;">
-    </pagination>
 </div>

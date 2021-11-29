@@ -20,6 +20,8 @@ import { ProductDetailComponent } from './products/product-detail/product-detail
 import { CheckoutComponent } from './checkout/checkout.component';
 import { CheckoutSuccessComponent } from './checkout/checkout-success/checkout-success.component';
 import { LoadingInterceptor } from './_interceptor/loading.interceptor';
+import { HomeComponent } from './home/home.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { LoadingInterceptor } from './_interceptor/loading.interceptor';
     ProductDetailComponent,
     CheckoutComponent,
     CheckoutSuccessComponent,
+    HomeComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
