@@ -5,6 +5,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { OrdersComponent } from './orders/orders.component';
 import { ProductListComponent } from './products/product-list/product-list.component';
 import { RegisterComponent } from './register/register.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
@@ -27,6 +28,7 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [
+      {path: "orders", component: OrdersComponent},
       {path: "checkout", component: CheckoutComponent},
       {path: "checkout/success", component: CheckoutSuccessComponent}
     ]

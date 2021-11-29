@@ -1,5 +1,4 @@
-﻿using SilksyAPI.Dto;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,8 +8,15 @@ namespace SilksyAPI.Helpers
 {
     public class OrderParams
     {
-        public string PaymentIntentId { get; set; }
+        private const int MaxPageSize = 50;
+        public int PageNumber { get; set; } = 1;
 
-        public AddressDto ShippingAddress { get; set; }
+        private int pageSize = 6;
+
+        public int PageSize
+        {
+            get => pageSize;
+            set => pageSize = (value > MaxPageSize) ? MaxPageSize : value;
+        }
     }
 }

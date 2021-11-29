@@ -24,7 +24,10 @@
                     <a class="dropdown-item" routerLink="/register">Join</a>
                 </li>
                 <li *ngIf="accountService.currentUser$ | async">
-                    <a class="dropdown-item" (click)="logout()">Sign out</a>
+                    <a class="dropdown-item" routerLink="/orders">My Orders</a>
+                </li>
+                <li *ngIf="accountService.currentUser$ | async">
+                    <a class="dropdown-item" (click)="logout()">Sign Out</a>
                 </li>
                 </div>
             </div>

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Address } from '../model/address';
-import { OrderParams } from '../model/orderParams';
+import { OrderCreateParams } from '../model/orderCreateParams';
 import { IPaymentIntentModel } from '../model/paymentIntent';
 import { AccountService } from '../_services/account.service';
 import { CheckoutService } from '../_services/checkout.service';
@@ -85,7 +85,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       const shippingAddress = new Address(this.checkoutForm.get("address").value, this.checkoutForm.get("address2").value, this.checkoutForm.get("country").value,
       this.checkoutForm.get("city").value, this.checkoutForm.get("postcode").value);
 
-      let orderParams = new OrderParams(this.paymentIntentId, shippingAddress);
+      let orderParams = new OrderCreateParams(this.paymentIntentId, shippingAddress);
       let order = await this.createOrder(orderParams);
 
       const {paymentIntent, error} = await this.stripe.confirmCardPayment(this.clientSecret, {
@@ -121,7 +121,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.isLoadingPaymentSubmission = false;
   }
 
-  private async createOrder(orderParams: OrderParams) {
+  private async createOrder(orderParams: OrderCreateParams) {
     return this.checkoutService.createOrder(orderParams).toPromise();
   } 
 

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SilksyAPI.Data;
 using SilksyAPI.Dto;
 using SilksyAPI.Entities;
+using SilksyAPI.Extensions;
 using SilksyAPI.Helpers;
 using SilksyAPI.Interface;
 using System.Collections.Generic;
@@ -35,9 +36,9 @@ namespace SilksyAPI.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("{orderId}")]
         [Authorize]
-        public async Task<ActionResult> GetOrder([FromQuery]int orderId)
+        public async Task<ActionResult> GetOrder(int orderId)
         {
             // User should only get the order they own
             var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -52,9 +53,25 @@ namespace SilksyAPI.Controllers
             return Ok(orderDto);
         }
 
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult> GetOrders([FromQuery] OrderParams orderParams)
+        {
+            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await userRepository.GetUserByUsernameAsync(username);
+
+            var orders = await orderRepository.GetUserOrdersAsync(user, orderParams);
+
+            Response.AddPaginationHeader(orders.CurrentPage, orders.PageSize,
+               orders.TotalCount, orders.TotalPages);
+
+            return Ok(mapper.Map<IEnumerable<OrderDto>>(orders.Items));
+        }
+
+
         [HttpPost("CreateOrder")]
         [Authorize]
-        public async Task<ActionResult> CreateOrder(OrderParams orderParams)
+        public async Task<ActionResult> CreateOrder(OrderCreateParams orderParams)
         {
             AddressDto addressDto = orderParams.ShippingAddress;
             var shippingAddress = mapper.Map<Entities.Address>(addressDto);

@@ -1,0 +1,47 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12" *ngIf="orders">
+            <table class="table table-hover" style="cursor: pointer">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Order</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Delivery Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let order of orders">
+                    <th># {{order.id}}</th>
+                    <td>{{order.orderDate | date: 'longDate' }}</td>
+                    <td>{{order.totalPrice | currency: 'GBP'}}</td>
+                    <td>
+                        <span>{{order.shippingAddress.addressLine1}}, </span>
+                        <span *ngIf="order.shippingAddress?.addressLine2">{{order.shippingAddress.addressLine2}}, </span>
+                        <span *ngIf="order.shippingAddress?.country">{{order.shippingAddress.country}}, </span>
+                        <span>{{order.shippingAddress.city}}, </span>
+                        <span>{{order.shippingAddress.postcode}}</span>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+        <div class="col-12" *ngIf="!orders">
+            <h6>No Orders</h6>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center" *ngIf="pagination?.totalItems > 0">
+        <pagination 
+        [boundaryLinks]="true" 
+        [totalItems]="pagination.totalItems"
+        [itemsPerPage]="pagination.itemsPerPage"
+        [(ngModel)]="pagination.currentPage"
+        (pageChanged)="pageChanged($event)"
+        previousText="&rsaquo;"
+        nextText="&rsaquo;" 
+        firstText="&laquo;" 
+        lastText="&raquo;">
+        </pagination>
+    </div>
+</div>

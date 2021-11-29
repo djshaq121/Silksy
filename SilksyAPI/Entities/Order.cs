@@ -26,7 +26,7 @@ namespace SilksyAPI.Entities
         public string PaymentIntentId { get; set; }
         public int UserId { get; set; }
         public StoreUser User { get; set; }
-        public ICollection<OrderItem> OrderItems { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
         public DateTimeOffset OrderDate { get; set; } = DateTimeOffset.Now;
 
         public int BillingAddressId { get; set; }

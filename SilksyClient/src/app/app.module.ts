@@ -22,6 +22,7 @@ import { CheckoutSuccessComponent } from './checkout/checkout-success/checkout-s
 import { LoadingInterceptor } from './_interceptor/loading.interceptor';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { OrdersComponent } from './orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     CheckoutSuccessComponent,
     HomeComponent,
     NotFoundComponent,
+    OrdersComponent,
   ],
   imports: [
     BrowserModule,

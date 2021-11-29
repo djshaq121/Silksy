@@ -1,4 +1,4 @@
-<div class="row g-0" *ngIf="order">
+<div class="row g-0 mt-5" *ngIf="order">
     <span class="col-md-1"><i class="fa fa-check-circle fa-4x" style="color:green; vertical-align: text-top;"></i></span>
     <h4 class="col-md-8">Thank you for your order</h4>
 
@@ -7,7 +7,7 @@
     
     <div class="col-sm-6">
         <h6>Order Date</h6>
-        <p>{{order?.orderDate | date : 'longDate' }}</p>
+        <p>{{order?.orderDate | date: 'longDate' }}</p>
     </div>
     <div class="col-sm-4">
         <h6>Delivery Address</h6>
