@@ -9,7 +9,7 @@
   <h1 align="center">Silksy</h1>
 
   <p align="center">
-   Silksy is an ecommerce app, that sells high-end, eco-conscious hair products. Built using .NET and Angualr 12
+   Silksy is an ecommerce app, that sells high-end, eco-conscious hair products. Built using .NET 5 and Angular 12
    
   </p>
 </div>
@@ -49,7 +49,7 @@
 Silksy came about like all good projects. A friend with an app idea. They wanted to sell high-end but eco friendly hair products in a style similar to Uber Eats. 
 I built this web app for fun, learning purposes and a proof of concept. 
 
-The underlying architecture of Silksy uses ASP.NET and SQL Server for the backend, and Angualr 12 for the frontend. 
+The underlying architecture of Silksy uses ASP.NET and SQL Server for the backend, and Angular 12 for the frontend. 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
