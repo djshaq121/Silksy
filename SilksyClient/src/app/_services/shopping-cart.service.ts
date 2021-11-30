@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { catchError, flatMap, map, switchMap, take } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { IProduct } from '../model/product';
 import { ICartItem, IShoppingCart, ShoppingCart } from '../model/shopping-cart';
 import { User } from '../model/user';
@@ -21,7 +22,7 @@ export class ShoppingCartService {
   private cartLengthSource = new BehaviorSubject<number>(0);
   cartLength$ = this.cartLengthSource.asObservable();
 
-  baseUrl = "https://localhost:5001/api/";
+  baseUrl = environment.apiUrl;
   user: User = null;
 
   constructor(private http: HttpClient, private accountService: AccountService, private toastr: ToastrService) {

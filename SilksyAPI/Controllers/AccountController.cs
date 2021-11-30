@@ -69,7 +69,7 @@ namespace SilksyAPI.Controllers
             var result = await signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
             if (!result.Succeeded)
-                BadRequest("Username or password is incorrect");
+                return BadRequest("Username or password is incorrect");
 
             return new UserDto
             {

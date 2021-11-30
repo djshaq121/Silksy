@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { IBrand } from '../model/brand';
 import { ICategory } from '../model/category';
 import { PaginatedResult } from '../model/pagination';
@@ -12,7 +12,7 @@ import { ProductParams } from '../model/productParams';
   providedIn: 'root'
 })
 export class ProductService {
-  baseUrl = "https://localhost:5001/api/"; 
+  baseUrl = environment.apiUrl; 
   paginatedResult: PaginatedResult<IProduct[]> = new PaginatedResult<IProduct[]>();
   public productParams: ProductParams = new ProductParams();
 

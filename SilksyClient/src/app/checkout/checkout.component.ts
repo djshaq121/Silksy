@@ -45,9 +45,19 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   
   ngAfterViewInit(): void {
     this.stripe = Stripe(environment.stripePublishableKey);
-    this.checkout();
+    this.createPaymentIntent();
+
+    // This ensures we create a payment 
+    // this.accountService.currentUser$.subscribe(user => {
+    //   if(user) {
+    //     this.createPaymentIntent();
+    //   }
+    // });
   }
-  checkout() {
+  createPaymentIntent() {
+    if(this.paymentIntentId !== "")
+      return;
+
     this.checkoutService.createPaymentIntent().subscribe((result: IPaymentIntentModel) => {
       this.paymentIntentId = result.paymentIntentId;
       this.initStripe(result.clientSecret);

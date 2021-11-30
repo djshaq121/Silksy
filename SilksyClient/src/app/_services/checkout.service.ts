@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { IOrder } from '../model/order';
 import { OrderCreateParams } from '../model/orderCreateParams';
 import { OrderParams } from '../model/orderParams';
@@ -11,7 +12,7 @@ import { PaginatedResult } from '../model/pagination';
 })
 export class CheckoutService {
 
-  baseUrl = "https://localhost:5001/api/"; 
+  baseUrl = environment.apiUrl; 
   paginatedResult: PaginatedResult<IOrder[]> = new PaginatedResult<IOrder[]>();
   constructor(private http: HttpClient) { }
 

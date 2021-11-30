@@ -1,4 +1,4 @@
-<div style="padding-top: 70px; width: 90%; margin: auto">
+<div class="mt-5" style="width: 80%; margin: auto">
     <section id="sidebar" style="padding-top: 0px;">
         <!-- <div class="spinner-border" *ngIf="(isFilterLoading$ | async) > 0">
     
@@ -42,7 +42,7 @@
     
     
     <!-- justify-content-center --> <!--Main Content-->
-    <div class="row">
+    <div class="row gx-2">
         <div class="col-md-3" *ngFor="let product of products">
             <app-product-card [product]='product'></app-product-card>
         </div>
