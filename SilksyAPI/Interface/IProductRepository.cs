@@ -14,7 +14,7 @@ namespace SilksyAPI.Interface
         Task<ProductDto> GetProductDtoByIdAsync(int productId);
         Task<PagedList<ProductDto>> GetProductsAsync(ProductParams productParams);
 
-        Task<List<BrandDto>> GetBrandsAsync();
+        Task<List<BrandWithCountDto>> GetBrandsAsync();
 
         Task<List<CategoryDto>> GetCategoriesAsync();
 

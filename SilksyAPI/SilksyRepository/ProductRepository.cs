@@ -66,11 +66,31 @@ namespace SilksyAPI.SilksyRepository
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<List<BrandDto>> GetBrandsAsync()
+        public async Task<List<BrandWithCountDto>> GetBrandsAsync()
         {
-            return await context.Brands
-                 .ProjectTo<BrandDto>(mapper.ConfigurationProvider)
-                 .ToListAsync();
+            //var Brands = await context.Products
+            //               .Join(context.Brands,
+            //               p => p.Id,
+            //               b => b.Id,
+
+            //               )
+            var BrandsWithCoundQuery = from p in context.Products
+                         join b in context.Brands
+                         on p.BrandId equals b.Id
+                         group p.BrandId by new { p.BrandId, b.Name } into BrandGroup
+                         select new BrandWithCountDto
+                         {
+                             Id = BrandGroup.Key.BrandId,
+                             Name = BrandGroup.Key.Name,
+                             Count = BrandGroup.Count()
+
+                         };
+
+            return await BrandsWithCoundQuery.ToListAsync();
+
+            //return await context.Brands
+            //     .ProjectTo<BrandDto>(mapper.ConfigurationProvider)
+            //     .ToListAsync();
         }
 
         public async Task<List<CategoryDto>> GetCategoriesAsync()
