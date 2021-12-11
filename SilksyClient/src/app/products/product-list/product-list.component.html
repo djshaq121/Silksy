@@ -22,6 +22,9 @@
                     [ngClass]="{'selected' : brand.id == productService.productParams.brandId}"
                     > 
                         {{brand.name}} 
+                        <span class="text-muted">
+                            ({{brand.count}})
+                        </span>
                  </li> 
             </ul>
         </div>
