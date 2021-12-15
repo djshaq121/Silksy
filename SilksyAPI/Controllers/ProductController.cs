@@ -39,7 +39,7 @@ namespace SilksyAPI.Controllers
         }
 
         [HttpGet("Brands")]
-        public async Task<ActionResult<List<BrandWithCountDto>>> GetBrands()
+        public async Task<ActionResult<List<BrandWithCountDto>>> GetBrands() 
         {
             return Ok(await productRepository.GetBrandsAsync());
         }

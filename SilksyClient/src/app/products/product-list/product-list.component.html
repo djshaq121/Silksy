@@ -14,7 +14,7 @@
         <div>
             <h6 class="p-1 border-bottom">Filter By</h6>
             <h6 class="mb-2">Brands</h6>
-            <ul class="list-group">
+            <ul class="list-group" style="cursor: pointer;">
                 <li class="list-group-item list-group-item-action mb-2 rounded" 
                     *ngFor="let brand of brands" 
                     [value]="brand.id" 
@@ -30,7 +30,7 @@
         </div>
         <div>
             <h6>Hair Category</h6>
-            <ul class="list-group">
+            <ul class="list-group" style="cursor: pointer;">
                 <li class="list-group-item list-group-item-action mb-2 rounded" 
                     *ngFor="let category of categories" 
                     [value]="category.id" 
@@ -38,6 +38,9 @@
                     [ngClass]="{'selected' : category.id == productService.productParams.categoriesId}"
                     > 
                         {{category.name}} 
+                        <span class="text-muted">
+                            ({{category.count}})
+                        </span>
                  </li> 
             </ul>
         </div>

@@ -68,13 +68,7 @@ namespace SilksyAPI.SilksyRepository
 
         public async Task<List<BrandWithCountDto>> GetBrandsAsync()
         {
-            //var Brands = await context.Products
-            //               .Join(context.Brands,
-            //               p => p.Id,
-            //               b => b.Id,
-
-            //               )
-            var BrandsWithCoundQuery = from p in context.Products
+            var BrandsWithCountQuery = from p in context.Products
                          join b in context.Brands
                          on p.BrandId equals b.Id
                          group p.BrandId by new { p.BrandId, b.Name } into BrandGroup
@@ -86,7 +80,7 @@ namespace SilksyAPI.SilksyRepository
 
                          };
 
-            return await BrandsWithCoundQuery.ToListAsync();
+            return await BrandsWithCountQuery.ToListAsync();
 
             //return await context.Brands
             //     .ProjectTo<BrandDto>(mapper.ConfigurationProvider)
@@ -95,9 +89,22 @@ namespace SilksyAPI.SilksyRepository
 
         public async Task<List<CategoryDto>> GetCategoriesAsync()
         {
-            return await context.Categories
-                .ProjectTo<CategoryDto>(mapper.ConfigurationProvider)
-                .ToListAsync();
+            var CategoriesWithCountQuery = from pc in context.ProductCategories
+                                           join c in context.Categories
+                                           on pc.CategoryId equals c.Id
+                                           group c.Name by new { pc.CategoryId, c.Name } into productCategoryJoinTable
+                                           select new CategoryDto
+                                           {
+                                               Id = productCategoryJoinTable.Key.CategoryId,
+                                               Name = productCategoryJoinTable.Key.Name,
+                                               Count = productCategoryJoinTable.Count()
+                                           };
+
+            return await CategoriesWithCountQuery.ToListAsync();
+
+                //await context.Categories
+                //.ProjectTo<CategoryDto>(mapper.ConfigurationProvider)
+                //.ToListAsync();
         }
     }
 }
