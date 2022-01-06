@@ -1,0 +1,18 @@
+<div>
+    <h4 class="mb-3">Payment</h4>
+    <div #cardElement class="col-12 mb-2">
+        <!--Stripe.js injects the Payment Element-->
+        
+    </div>
+    
+    <hr class="my-4">
+    
+    <button [disabled]="!AddressForm.valid" class="btn btn-primary btn-block" (click)="onConfirmPayment()">
+        <div class="spinner-border text-secondary" *ngIf="isLoadingPaymentSubmission"></div>
+        <span id="button-text" *ngIf="!isLoadingPaymentSubmission">Pay now </span>
+    </button>
+    
+    <div *ngIf="stripePaymentMessage" class="col-12 text-error mt-3">
+        <span>{{ stripePaymentMessage }}</span>
+    </div>
+</div>

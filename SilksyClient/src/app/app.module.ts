@@ -23,6 +23,7 @@ import { LoadingInterceptor } from './_interceptor/loading.interceptor';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { OrdersComponent } from './orders/orders.component';
+import { CheckoutPaymentComponent } from './checkout/checkout-payment/checkout-payment.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { OrdersComponent } from './orders/orders.component';
     HomeComponent,
     NotFoundComponent,
     OrdersComponent,
+    CheckoutPaymentComponent,
   ],
   imports: [
     BrowserModule,

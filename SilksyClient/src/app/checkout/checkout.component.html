@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-8">
             <h4 class="mb-3">Shipping Address</h4>
-            <form id="payment-form" (ngSubmit)="onConfirmPayment()" [formGroup]="checkoutForm">
+            <form id="payment-form" [formGroup]="checkoutForm">
                 <div class="row g-2">
                     <div class="col-12 form-floating mb-1">
                         <input formControlName="address" type="text" class="form-control" placeholder="address">
@@ -27,9 +27,14 @@
                 </div>
         
                 <hr class="my-4">
-                <h4 class="mb-3">Payment</h4>
+                <div *ngIf="showPaymentComponent">
+                    <app-checkout-payment [AddressForm]=checkoutForm></app-checkout-payment>
+                </div>
+                <button class="btn btn-primary btn-block" (click)="openPaymentComponent()" *ngIf="!showPaymentComponent">Add Payment</button>
+               
+                <!-- <h4 class="mb-3">Payment</h4>
                 <div #cardElement class="col-12 mb-2">
-                    <!--Stripe.js injects the Payment Element-->
+                    Stripe.js injects the Payment Element
                    
                 </div>
         
@@ -42,7 +47,7 @@
                
                 <div *ngIf="stripePaymentMessage" class="col-12 text-error mt-3">
                     <span>{{ stripePaymentMessage }}</span>
-                </div>
+                </div> -->
             </form>
         </div>
         <div class="col-md-4">
