@@ -59,6 +59,11 @@ namespace SilksyAPI.SilksyRepository
             context.Carts.Add(cart);
         }
 
+        public void AddCartAsync(Cart cart)
+        {
+            context.Carts.AddAsync(cart);
+        }
+
         public async Task<bool> SaveAllChangesAsync()
         {
             return await context.SaveChangesAsync() > 0;

@@ -13,6 +13,8 @@ namespace SilksyAPI.Interface
         Task<Cart> GetCartByUserIdAsync(int userId);
         Task<CartDto> GetCartDtoByUserIdAsync(int userId);
         void AddCart(Cart cart);
+
+        void AddCartAsync(Cart cart);
         Task<bool> SaveAllChangesAsync();
         void DeleteCart(Cart cart);
     }

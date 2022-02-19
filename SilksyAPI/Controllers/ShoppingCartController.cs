@@ -38,6 +38,9 @@ namespace SilksyAPI.Controllers
         {
             var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var user = await userRepository.GetUserByUsernameAsync(username);
+            if (user == null)
+                return BadRequest("User not found");
+
 
             var cart = new Cart();
             foreach (var ci in cartDto.CartItems)
@@ -83,6 +86,8 @@ namespace SilksyAPI.Controllers
         {
             var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var user = await userRepository.GetUserByUsernameAsync(username);
+            if (user == null)
+                return BadRequest("User not found");
 
             var cart = await shoppingCartRepository.GetCartDtoByUserIdAsync(user.Id);
 
